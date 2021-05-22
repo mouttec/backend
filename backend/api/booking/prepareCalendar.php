@@ -56,7 +56,7 @@ if ($counter > 0) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
             $datetimeStart = $dateBack.' '.$hoursBack;
             $durationDelay = round(($durationBack+20)/15)*15;
-            $datetimeEnd = $dateBack.' '.date('H:i:s', strtotime( $hourseBack.' +'.$durationDelay.' minutes'));
+            $datetimeEnd = $dateBack.' '.date('H:i:s', strtotime( $hoursBack.' +'.$durationDelay.' minutes'));
             switch ($formulaBooking) {
                 case 'technicalControl':
                     $color = ['yellow' => ['primary' => '#A1A1A1', 'secondary' => '#A1A1A1']];
