@@ -17,27 +17,6 @@ if ($counter > 0) {
     $calendar = array();
     while ($row = $bookings->fetch()) {
         extract($row);
-        // $booking_item = [
-        //      "idBooking" => $idBooking,
-        //      "idCustomer" => $idCustomer,
-        //      "idPartner" => $idPartner,
-        //      "hoursForth" => $hoursForth,
-        //      "dateForth" => $dateForth,
-        //      "statusBooking" => $statusBooking,
-        //      "formulaBooking" => $formulaBooking,
-        //      "dateBack" => $dateBack,
-        //      "hoursBack" => $hoursBack,
-        //      "idCar" => $idCar,
-        //      "idForthAddress" => $idForthAddress,
-        //      "idBackAddress" => $idBackAddress,
-        //      "idAgency" => $idAgency,
-        //      "distanceForth" => $distanceForth,
-        //      "durationForth" => $durationForth,
-        //      "distanceBack" => $distanceBack,
-        //      "durationBack" => $durationBack,
-        //      "originBooking" => $originBooking,
-        //      "dateBooking" => $dateBooking
-        // ];
         $customer->idCustomer = $idCustomer;
         $thisCustomer = $customer->searchCustomerById($customer);
         if (!is_null($dateForth)) {
@@ -69,8 +48,8 @@ if ($counter > 0) {
                 'idBooking' => $idBooking,
                 'idPartner' => $idPartner,
                 'formulaBooking' => $formulaBooking,
-                'color' => $color;
-            ]
+                'color' => $color
+            ];
             array_push($calendar, $booking_item);
         }
         if (!is_null($dateBack)) {
@@ -102,8 +81,8 @@ if ($counter > 0) {
                 'idBooking' => $idBooking,
                 'idPartner' => $idPartner,
                 'formulaBooking' => $formulaBooking,
-                'color' =>
-            ]
+                'color' => $color
+            ];
             array_push($calendar, $booking_item);
         }
     }

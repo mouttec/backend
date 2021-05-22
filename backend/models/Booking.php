@@ -93,21 +93,19 @@ class Booking {
         return $stmt;
     }
 
-    public function prepareCalendar() 
+    public function listBookingsForCalendar() 
     {
         $query = "
             SELECT *
             FROM "
             . $this->table . "
-            WHERE (dateBooking >= :startDate AND dateBooking <= :endDate AND idAgency = :idAgency) 
+            WHERE dateBooking >= :startDate 
             ORDER BY
-            idBooking DESC";
+            dateBooking ASC";
         $stmt = $this->conn->prepare($query);
 
         $params = [
             "startDate" => date('j/m/Y'),
-            "endDate" => date('d/m/Y', strtotime('+60 days')),
-            "idAgency" => htmlspecialchars(strip_tags($this->idAgency))
         ];
 
         if ($stmt->execute($params)) {
