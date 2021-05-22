@@ -21,9 +21,9 @@ if ($counter > 0) {
         $thisCustomer = $customer->searchCustomerById($customer);
         if (!is_null($dateForth)) {
             $dateForth =  implode('-', array_reverse(explode('/', $dateForth)));
-            $datetimeStart = $dateForth.' '.$hoursForth.':00';
+            $datetimeStart = $dateForth.' '.$hoursForth;
             $durationDelay = round(($durationForth+20)/15)*15;
-            $datetimeEnd = $dateForth.' '.date('H:i', strtotime( $dateForth.' +'.$durationDelay.' minutes')).':00';
+            $datetimeEnd = $dateForth.' '.date('H:i:s', strtotime( $dateForth.' +'.$durationDelay.' minutes'));
             switch ($formulaBooking) {
                 case 'technicalControl':
                     $color = ['yellow' => ['primary' => '#A1A1A1', 'secondary' => '#A1A1A1']];
@@ -54,9 +54,9 @@ if ($counter > 0) {
         }
         if (!is_null($dateBack)) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
-            $datetimeStart = $dateBack.' '.$hoursBack.':00';
+            $datetimeStart = $dateBack.' '.$hoursBack;
             $durationDelay = round(($durationBack+20)/15)*15;
-            $datetimeEnd = $dateBack.' '.date('H:i', strtotime( $dateBack.' +'.$durationDelay.' minutes')).':00';
+            $datetimeEnd = $dateBack.' '.date('H:i:s', strtotime( $dateBack.' +'.$durationDelay.' minutes'));
             switch ($formulaBooking) {
                 case 'technicalControl':
                     $color = ['yellow' => ['primary' => '#A1A1A1', 'secondary' => '#A1A1A1']];
