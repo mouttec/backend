@@ -93,28 +93,6 @@ class Booking {
         return $stmt;
     }
 
-    public function listBookingsForCalendar() 
-    {
-        $query = "
-            SELECT *
-            FROM "
-            . $this->table /*. "
-            WHERE dateBooking >= :startDate 
-            ORDER BY
-            dateBooking ASC"*/;
-        $stmt = $this->conn->prepare($query);
-
-        // $params = [
-        //     "startDate" => date('j/m/Y')
-        // ];
-        $stmt->execute();
-        return $stmt;
-        // if ($stmt->execute($params)) {
-        //     return $stmt;
-        // }
-        // return false;
-    }
-
     public function searchBookingById() 
     {
         $query = "

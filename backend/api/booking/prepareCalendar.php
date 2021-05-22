@@ -11,7 +11,7 @@ $conn = $db->connect();
 $booking = new Booking($conn);
 $customer = new Customer($conn);
 
-$bookings = $booking->listBookingsForCalendar();
+$bookings = $booking->listBookings();
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     $calendar = array();
@@ -43,7 +43,7 @@ if ($counter > 0) {
             }
             $booking_item = [
                 'fullNameCustomer' => $thisCustomer['firstNameCustomer'].' '.$thisCustomer['lastNameCustomer'],
-                'start' => $datetimeBooking,
+                'start' => $datetimeStart,
                 'end' => $datetimeEnd,
                 'idBooking' => $idBooking,
                 'idPartner' => $idPartner,
@@ -76,7 +76,7 @@ if ($counter > 0) {
             }
             $booking_item = [
                 'fullNameCustomer' => $thisCustomer['firstNameCustomer'].' '.$thisCustomer['lastNameCustomer'],
-                'start' => $datetimeBooking,
+                'start' => $datetimeStart,
                 'end' => $datetimeEnd,
                 'idBooking' => $idBooking,
                 'idPartner' => $idPartner,
