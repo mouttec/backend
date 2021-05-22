@@ -99,7 +99,7 @@ class Booking {
             SELECT *
             FROM "
             . $this->table . "
-            WHERE dateBooking >= :startDate 
+            WHERE (dateBooking >= :startDate) 
             ORDER BY
             dateBooking ASC";
         $stmt = $this->conn->prepare($query);
