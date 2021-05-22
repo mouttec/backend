@@ -98,20 +98,21 @@ class Booking {
         $query = "
             SELECT *
             FROM "
-            . $this->table . "
-            WHERE (dateBooking >= :startDate) 
+            . $this->table /*. "
+            WHERE dateBooking >= :startDate 
             ORDER BY
-            dateBooking ASC";
+            dateBooking ASC"*/;
         $stmt = $this->conn->prepare($query);
 
-        $params = [
-            "startDate" => date('j/m/Y'),
-        ];
-
-        if ($stmt->execute($params)) {
-            return $stmt;
-        }
-        return false;
+        // $params = [
+        //     "startDate" => date('j/m/Y')
+        // ];
+        $stmt->execute();
+        return $stmt;
+        // if ($stmt->execute($params)) {
+        //     return $stmt;
+        // }
+        // return false;
     }
 
     public function searchBookingById() 

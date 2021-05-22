@@ -12,7 +12,6 @@ $booking = new Booking($conn);
 $customer = new Customer($conn);
 
 $bookings = $booking->listBookingsForCalendar();
-echo json_encode($bookings);
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     $calendar = array();
