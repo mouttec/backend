@@ -1,7 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: GET");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-With");
 include_once "../../config/Database.php";
 include_once "../../models/Booking.php";
@@ -12,10 +12,9 @@ $conn = $db->connect();
 $booking = new Booking($conn);
 $customer = new Customer($conn);
 
-$decodedData = json_decode(file_get_contents("php://input"));
 
-if (isset($decodedData->idPartner)) {
-    $booking->idPartner = $decodedData->idPartner;
+if (isset($_GET['idPartner'])) {
+    $booking->idPartner = $_GET['idPartner'];
     $bookings = $booking->searchBookingsByPartner($booking);
 } else {
     $bookings = $booking->listBookings();
