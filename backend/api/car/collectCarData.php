@@ -36,7 +36,7 @@ if (is_numeric(substr($carPlate, 0, 1))) {
 }
 $car->licensePlateCar = $carPlate;
 $carData = $car->searchCarByPlate($car);
-echo json_encode($carData);
+echo json_encode('$carData = ' => $carData);
 if (strlen($carData[0]) == 0) {
     echo json_encode('le véhicule n\'existe pas');
 /*    try {
