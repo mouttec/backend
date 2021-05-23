@@ -36,8 +36,9 @@ if (is_numeric(substr($carPlate, 0, 1))) {
 }
 $car->licensePlateCar = $carPlate;
 $carData = $car->searchCarByPlate($car);
-if (empty($carData[0])) {
-    try {
+if (strlen($carData) == 0) {
+    echo json_encode('le véhicule n\'existe pas');
+/*    try {
         $options = [
             'soap_version' => SOAP_1_2,
             'exceptions' => true,
@@ -82,7 +83,7 @@ if (empty($carData[0])) {
     catch (Exception $e) {
         echo $e."\n";
         var_dump($client->__getLastRequest());
-    }
+    }*/
 } else {
 	echo json_encode($carData);
 }
