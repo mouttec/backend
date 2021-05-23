@@ -28,7 +28,7 @@ if (isset($_GET['idBooking'])) {
         $bookings = $booking->searchBookingsByPartner($booking);
     } elseif (isset($_GET['idCustomer'])) {
         $booking->idCustomer = $_GET['idCustomer'];
-        $bookings = $booking->searchBookingsByCustomer($bookings);
+        $bookings = $booking->searchBookingsByCustomer($booking);
     } elseif (isset($_GET['idAgency'])) {
         $booking->idAgency = $_GET['idAgency'];
         $bookings = $booking->searchBookingsByAgency($booking);
