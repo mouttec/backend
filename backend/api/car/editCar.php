@@ -21,8 +21,6 @@ $car->motorizationCar = $decodedData->motorizationCar;
 $filenameCar = $decodedData->filenameCar;
 $car->urlGrayCard = $car->idCustomer."/". $filenameCar;
 
-$car->urlGrayCard = $decodedData->urlGrayCard;
-
 if(!empty($decodedData->idCar)) {
     $car->idCar = $decodedData->idCar;
     $result = $car->updateCar($car);
