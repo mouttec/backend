@@ -1,6 +1,7 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
+header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-With");
 include_once "../../config/Database.php";
 include_once "../../models/Booking.php";
@@ -11,7 +12,14 @@ $conn = $db->connect();
 $booking = new Booking($conn);
 $customer = new Customer($conn);
 
-$bookings = $booking->listBookings();
+$decodedData = json_decode(file_get_contents("php://input"));
+
+if (isset($decodedData->idPartner)) {
+    $booking->idPartner = $decodedData->idPartner;
+    $bookings = $booking->searchBookingsByPartner($booking);
+} else {
+    $bookings = $booking->listBookings();
+}
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     $calendar = array();
@@ -23,7 +31,7 @@ if ($counter > 0) {
             $dateForth =  implode('-', array_reverse(explode('/', $dateForth)));
             $datetimeStart = $dateForth.' '.$hoursForth;
             $durationDelay = round(($durationForth+20)/15)*15;
-            $datetimeEnd = $dateForth.' '.date('H:i:s', strtotime( $hoursForth.' +'.$durationDelay.' minutes'));
+            $datetimeEnd = $dateForth.' '.date('H:i:s', strtotime($hoursForth.' +'.$durationDelay.' minutes'));
             switch ($formulaBooking) {
                 case 'technicalControl':
                     $color = ['yellow' => ['primary' => '#A1A1A1', 'secondary' => '#A1A1A1']];
