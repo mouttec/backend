@@ -24,7 +24,6 @@ class Car
             INSERT INTO "
             . $this->table .
             " SET
-            idCustomer = :idCustomer,
             licensePlateCar = :licensePlateCar,
             brandCar = :brandCar,
             modelCar = :modelCar,
@@ -34,7 +33,6 @@ class Car
         $stmt = $this->conn->prepare($query);
 
         $params = [
-            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
             "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar)),
             "brandCar" => htmlspecialchars(strip_tags($this->brandCar)),
             "modelCar" => htmlspecialchars(strip_tags($this->modelCar)),
@@ -108,6 +106,29 @@ class Car
         if($stmt->execute($params)) {
             $row = $stmt->fetch();
             return $row;
+        }
+        return false;
+    }
+
+    public function bindCustomerToCar() 
+    {
+        $query = "
+            UPDATE "
+            . $this->table .
+            " SET
+            idCustomer = :idCustomer
+            WHERE
+            licensePlateCar = :licensePlateCar       
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
+            "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar))
+        ];
+
+        if($stmt->execute($params)) {
+            return true;
         }
         return false;
     }
