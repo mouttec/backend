@@ -67,7 +67,6 @@ if (!$carData) {
                 "motorizationCar" => $valeur1->puisCh,
             ];
         }
-        $car->idCustomer = $decodedData->idCustomer;
         $car->brandCar = $carData['brandCar'];
         $car->modelCar = $carData['modelCar'];
         $car->dateOfCirculationCar = str_replace('-', '',$carData['dateOfCirculationCar']->jour.'/'.$carData['dateOfCirculationCar']->mois.'/'.$carData['dateOfCirculationCar']->annee);
@@ -75,6 +74,10 @@ if (!$carData) {
         $car->versionCar = $carData['versionCar'];
         $car->motorizationCar = $carData['motorizationCar'];
         $result = $car->createCar($car);
+        if (isset($decodedData->idCustomer)) {
+            $car->idCustomer = $decodedData->idCustomer;
+            $car->bindCustomerToCar($car);
+        }
         if ($result) {
         	echo json_encode($carData);
         }

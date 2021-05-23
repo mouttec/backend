@@ -11,6 +11,8 @@ class Car
     public $modelCar;
     public $dateOfCirculationCar;
     public $motorizationCar;
+    public $colorCar;
+    public $versionCar;
     public $urlGrayCard;
 
     public function __construct($db) 
@@ -28,7 +30,9 @@ class Car
             brandCar = :brandCar,
             modelCar = :modelCar,
             dateOfCirculationCar = :dateOfCirculationCar,
-            motorizationCar = :motorizationCar
+            motorizationCar = :motorizationCar,
+            colorCar = :colorCar,
+            versionCar = :versionCar
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -37,7 +41,9 @@ class Car
             "brandCar" => htmlspecialchars(strip_tags($this->brandCar)),
             "modelCar" => htmlspecialchars(strip_tags($this->modelCar)),
             "dateOfCirculationCar" => htmlspecialchars(strip_tags($this->dateOfCirculationCar)),
-            "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar))
+            "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar)),
+            "colorCar" => htmlspecialchars(strip_tags($this->colorCar)),
+            "versionCar" => htmlspecialchars(strip_tags($this->versionCar))
         ];
 
         if($stmt->execute($params)) {
@@ -145,6 +151,8 @@ class Car
             modelCar = :modelCar,
             dateOfCirculationCar = :dateOfCirculationCar,
             motorizationCar = :motorizationCar,
+            colorCar = :colorCar,
+            versionCar = :versionCar,
             urlGrayCard = :urlGrayCard
             WHERE
             idCar = :idCar       
@@ -158,6 +166,8 @@ class Car
             "modelCar" => htmlspecialchars(strip_tags($this->modelCar)),
             "dateOfCirculationCar" => htmlspecialchars(strip_tags($this->dateOfCirculationCar)),
             "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar)),
+            "colorCar" => htmlspecialchars(strip_tags($this->colorCar)),
+            "versionCar" => htmlspecialchars(strip_tags($this->versionCar)),
             "urlGrayCard" => htmlspecialchars(strip_tags($this->urlGrayCard)),
             "idCar" => htmlspecialchars(strip_tags($this->idCar))
         ];
