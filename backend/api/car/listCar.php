@@ -40,6 +40,9 @@ if (isset($_GET['idCar'])) {
             array_push($cars_array, $car_item);
         }
         $result = $cars_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

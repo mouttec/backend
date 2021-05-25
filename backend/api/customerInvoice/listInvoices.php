@@ -50,6 +50,9 @@ if (isset($decodedData->idBooking)) {
             array_push($invoices_array, $invoice_item);
         }
         $result = $invoices_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

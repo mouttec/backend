@@ -30,6 +30,9 @@ if (isset($_GET['idAgency'])) {
     		array_push($agencies_array, $agency_item);
     	}
     	$result = $agencies_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

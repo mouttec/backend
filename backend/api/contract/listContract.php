@@ -78,6 +78,9 @@ if ((isset($_GET['idContract'])) || (isset($_GET['idBooking']))) {
             array_push($contracts_array, $contract_item);
         }
         $result = $contracts_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

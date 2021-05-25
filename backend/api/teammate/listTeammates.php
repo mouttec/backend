@@ -51,6 +51,9 @@ if (isset($_GET['idTeammate'])) {
 			array_push($teammates_array, $teammate_item);
 		}
 		$result = $teammates_array;
+		if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
 	}
 }
 

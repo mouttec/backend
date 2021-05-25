@@ -42,6 +42,9 @@ if (isset($_GET['idPartner'])) {
     		array_push($partners_array, $partner_item);
     	}
     	$result = $partners_array;
+    	if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

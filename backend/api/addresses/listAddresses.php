@@ -39,6 +39,9 @@ if (isset($_GET['idAddress'])) {
 			array_push($addresses_array, $address_item);
 		}
 		$result = $addresses_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
 	}
 }
 

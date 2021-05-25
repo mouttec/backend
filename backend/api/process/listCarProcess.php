@@ -57,6 +57,9 @@ if (isset($_GET['idCar'])) {
             array_push($processes_array, $process_item);
         }
         $result = $processes_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

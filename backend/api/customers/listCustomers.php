@@ -36,6 +36,9 @@ if (isset($_GET['idCustomer'])) {
             array_push($customers_array, $customer_item);
         }
         $result = $customers_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

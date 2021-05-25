@@ -26,6 +26,9 @@ if ($counter > 0) {
         array_push($prices_array, $price_item);
     }
     $result = $prices_array;
+    if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+    }
 }
 
 if (isset($result) && !empty($result)) {

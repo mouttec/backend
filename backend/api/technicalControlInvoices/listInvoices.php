@@ -29,6 +29,9 @@ if (isset($_GET['idTechnicalControlInvoices'])) {
             array_push($technicalControlInvoices_array, $technicalControlInvoice_item);
         }
         $result = $technicalControlInvoices_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 
