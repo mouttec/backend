@@ -43,26 +43,37 @@ if (isset($_GET['idBooking'])) {
         $bookings_array = array();
         while ($row = $bookings->fetch()) {
             extract($row);
+            if ($counter > 1) {
+                if (!is_null($dateForth)) {
+                    $datecode = implode('-', array_reverse(explode('/', $dateForth)));
+                    $timecode = str_replace(':', '', $hoursForth);
+                } else {
+                    $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
+                    $timecode = str_replace(':', '', $hoursBack);               
+                }
+            }
             $booking_item = [
-                 "idBooking" => $idBooking,
-                 "idCustomer" => $idCustomer,
-                 "idPartner" => $idPartner,
-                 "hoursForth" => $hoursForth,
-                 "dateForth" => $dateForth,
-                 "statusBooking" => $statusBooking,
-                 "formulaBooking" => $formulaBooking,
-                 "dateBack" => $dateBack,
-                 "hoursBack" => $hoursBack,
-                 "idCar" => $idCar,
-                 "idForthAddress" => $idForthAddress,
-                 "idBackAddress" => $idBackAddress,
-                 "idAgency" => $idAgency,
-                 "distanceForth" => $distanceForth,
-                 "durationForth" => $durationForth,
-                 "distanceBack" => $distanceBack,
-                 "durationBack" => $durationBack,
-                 "originBooking" => $originBooking,
-                 "dateBooking" => $dateBooking
+                     "idBooking" => $idBooking,
+                     "idCustomer" => $idCustomer,
+                     "idPartner" => $idPartner,
+                     "hoursForth" => $hoursForth,
+                     "dateForth" => $dateForth,
+                     "statusBooking" => $statusBooking,
+                     "formulaBooking" => $formulaBooking,
+                     "dateBack" => $dateBack,
+                     "hoursBack" => $hoursBack,
+                     "idCar" => $idCar,
+                     "idForthAddress" => $idForthAddress,
+                     "idBackAddress" => $idBackAddress,
+                     "idAgency" => $idAgency,
+                     "distanceForth" => $distanceForth,
+                     "durationForth" => $durationForth,
+                     "distanceBack" => $distanceBack,
+                     "durationBack" => $durationBack,
+                     "originBooking" => $originBooking,
+                     "dateBooking" => $dateBooking,
+                     "datecode" => $datecode,
+                     "timecode" => $timecode
             ];
             $customer->idCustomer = $idCustomer;
             $thisCustomer = $customer->searchCustomerById($customer);
@@ -70,6 +81,12 @@ if (isset($_GET['idBooking'])) {
             $thisCar = $car->searchCarById($car);
             array_push($booking_item, $thisCustomer, $thisCar);
             array_push($bookings_array, $booking_item);
+        }
+        $date  = array_column($resas, 'datecode');
+        $time = array_column($resas, 'timecode');
+        array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
+        if (isset($_GET['listLength'])) {
+            array_splice($bookings_array, -$_GET['listLength']);
         }
         $result = $bookings_array;
     }
