@@ -86,7 +86,7 @@ if (isset($_GET['idBooking'])) {
         $time = array_column($resas, 'timecode');
         array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
         if (isset($_GET['listLength'])) {
-            array_splice($bookings_array, -$_GET['listLength']);
+            array_splice($bookings_array, 0, -$_GET['listLength']);
         }
         $result = $bookings_array;
     }
