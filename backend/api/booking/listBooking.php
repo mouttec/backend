@@ -82,8 +82,8 @@ if (isset($_GET['idBooking'])) {
             array_push($booking_item, $thisCustomer, $thisCar);
             array_push($bookings_array, $booking_item);
         }
-        $date  = array_column($resas, 'datecode');
-        $time = array_column($resas, 'timecode');
+        $date  = array_column($bookings_array, 'datecode');
+        $time = array_column($bookings_array, 'timecode');
         array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
         $result = $bookings_array;
         if (isset($_GET['listLength'])) {
