@@ -43,14 +43,12 @@ if (isset($_GET['idBooking'])) {
         $bookings_array = array();
         while ($row = $bookings->fetch()) {
             extract($row);
-            if ($counter > 1) {
-                if (!is_null($dateForth)) {
-                    $datecode = implode('-', array_reverse(explode('/', $dateForth)));
-                    $timecode = str_replace(':', '', $hoursForth);
-                } else {
-                    $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
-                    $timecode = str_replace(':', '', $hoursBack);               
-                }
+            if (!is_null($dateForth)) {
+                $datecode = implode('-', array_reverse(explode('/', $dateForth)));
+                $timecode = str_replace(':', '', $hoursForth);
+            } else {
+                $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
+                $timecode = str_replace(':', '', $hoursBack);               
             }
             $booking_item = [
                      "idBooking" => $idBooking,
@@ -79,15 +77,19 @@ if (isset($_GET['idBooking'])) {
             $thisCustomer = $customer->searchCustomerById($customer);
             $car->idCar = $idCar;
             $thisCar = $car->searchCarById($car);
-            array_push($booking_item, $thisCustomer, $thisCar);
+            $booking_item['customerData'] = $thisCustomer;
+            $booking_item['carData'] = $thisCar;
+            // array_push($booking_item, $thisCustomer, $thisCar);
             array_push($bookings_array, $booking_item);
         }
-        $date  = array_column($bookings_array, 'datecode');
-        $time = array_column($bookings_array, 'timecode');
-        array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
+        if ($counter > 1) {
+            $date  = array_column($bookings_array, 'datecode');
+            $time = array_column($bookings_array, 'timecode');
+            array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
+        }
         $result = $bookings_array;
         if (isset($_GET['listLength'])) {
-            array_splice($result, 0, -$_GET['listLength']);
+            array_splice($bookings_array, 0, -$_GET['listLength']);
         }
     }
 }
