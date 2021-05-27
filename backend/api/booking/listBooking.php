@@ -89,7 +89,7 @@ if (isset($_GET['idBooking'])) {
         }
         $result = $bookings_array;
         if (isset($_GET['listLength'])) {
-            array_splice($bookings_array, 0, -$_GET['listLength']);
+            array_splice($result, 0, -$_GET['listLength']);
         }
     }
 }
