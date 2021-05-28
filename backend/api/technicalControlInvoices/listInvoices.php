@@ -3,24 +3,29 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: GET");
 include_once "../../config/Database.php";
-include_once "../../models/technicalControlInvoice.php";
+include_once "../../models/TechnicalControlInvoice.php";
 
 $db = new Database();
 $conn = $db->connect();
-$technicalControlInvoice = new technicalControlInvoice($conn);
+$technicalControlInvoice = new TechnicalControlInvoice($conn);
 
-if (isset($_GET['idTechnicalControlInvoices'])) {
-    $technicalControlInvoice->idTechnicalControlInvoices = $_GET['idTechnicalControlInvoices'];
+if (isset($_GET['idTechnicalControlInvoice'])) {
+    $technicalControlInvoice->idTechnicalControlInvoice = $_GET['idTechnicalControlInvoice'];
     $result = $technicalControlInvoice->searchInvoiceById($technicalControlInvoice);
 } else {
-    $technicalControlInvoices = $technicalControlInvoice->listInvoices();
+    if (isset($_GET['idPartner'])) {
+        $technicalControlInvoice->idPartner = $_GET['idPartner'];
+        $invoices = $technicalControlInvoice->searchInvoiceByPartner($technicalControlInvoice);        
+    } else {
+        $technicalControlInvoices = $technicalControlInvoice->listInvoices();
+    }
     $counter = $technicalControlInvoices->rowCount();
     if ($counter > 0) {
         $technicalControlInvoices_array = array();
         while ($row = $technicalControlInvoices->fetch()) {
             extract($row);
             $technicalControlInvoice_item = [
-                 "idTechnicalControlInvoices" => $idTechnicalControlInvoices,
+                 "idTechnicalControlInvoice" => $idTechnicalControlInvoice,
                  "idPartner" => $idPartner,
                  "monthlyInvoice" => $monthlyInvoice,
                  "urlInvoice" => $urlInvoice,

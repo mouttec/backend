@@ -4,29 +4,21 @@ header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-With");
 include_once "../../config/Database.php";
-include_once "../../models/technicalControlInvoice.php";
+include_once "../../models/TechnicalControlInvoice.php";
 
 $db = new Database();
 $conn = $db->connect();
-$technicalControlInvoice = new technicalControlInvoice($conn);
+$technicalControlInvoice = new TechnicalControlInvoice($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
-$technicalControlInvoice->idTechnicalControlInvoices = $decodedData->idTechnicalControlInvoices;
 $technicalControlInvoice->idPartner = $decodedData->idPartner;
 $technicalControlInvoice->monthlyInvoice = $decodedData->monthlyInvoice;
-$technicalControlInvoice->modelCar = $decodedData->modelCar;
 $technicalControlInvoice->priceInvoice = $decodedData->priceInvoice;
 $filenameTechnicalControlInvoice = $decodedData->filenameTechnicalControlInvoice;
-$technicalControlInvoice->urlInvoice = $technicalControlInvoice->idTechnicalControlInvoices."/". $filenameTechnicalControlInvoice;
-$ctechnicalControlInvoicear->urlInvoice = $decodedData->urlInvoice;
+$technicalControlInvoice->urlInvoice = $technicalControlInvoice->idPartner."/".$filenameTechnicalControlInvoice;
 
-if(!empty($decodedData->idTechnicalControlInvoices)) {
-    $ctechnicalControlInvoicear->idTechnicalControlInvoices = $decodedData->idTechnicalControlInvoices;
-    $result = $technicalControlInvoice->updateInvoices($technicalControlInvoice);
-} else {
-    $result = $car->createInvoice($ctechnicalControlInvoicear);
-}
+$result = $technicalControlInvoice->createInvoice($technicalControlInvoice);
 
 if ($result) {
     echo json_encode([ "message" => "La facture a été édité !" ]);
