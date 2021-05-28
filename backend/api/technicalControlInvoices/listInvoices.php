@@ -15,7 +15,7 @@ if (isset($_GET['idTechnicalControlInvoice'])) {
 } else {
     if (isset($_GET['idPartner'])) {
         $technicalControlInvoice->idPartner = $_GET['idPartner'];
-        $invoices = $technicalControlInvoice->searchInvoiceByPartner($technicalControlInvoice);        
+        $invoices = $technicalControlInvoice->searchInvoicesByPartner($technicalControlInvoice);        
     } else {
         $technicalControlInvoices = $technicalControlInvoice->listInvoices();
     }
