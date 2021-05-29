@@ -177,7 +177,7 @@ class Booking {
         return false;
     }
 
-        public function searchBookingsByAgency() 
+        public function searchBookingsForCalendar() 
     {
         $query = "
         SELECT *
