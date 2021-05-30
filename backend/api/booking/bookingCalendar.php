@@ -30,17 +30,21 @@ for ($h = 7; $h <= 20; $h++) {
     }
 }
 //Recherche du nombre de teammates "drivers" disponibles dans l'agence concernée 
-$teammate->idAgency = $decodedData->idAgency;
-$teammates = $teammate->searchTeammatesByAgency($teammate);
-$counter = $teammates->rowCount();
-if ($counter > 0) {
-    $driversInAgency = 0;
-    while($row = $teammates->fetch()) {
-        extract($row);
-        if (($jobTeammate == 'driver') && ($statusTeammate == 1)) {
-            $driversInAgency += 1;
+if (isset($decodedData->idAgency)) {
+    $teammate->idAgency = $decodedData->idAgency;
+    $teammates = $teammate->searchTeammatesByAgency($teammate);
+    $counter = $teammates->rowCount();
+    if ($counter > 0) {
+        $driversInAgency = 0;
+        while($row = $teammates->fetch()) {
+            extract($row);
+            if (($jobTeammate == 'driver') && ($statusTeammate == 1)) {
+                $driversInAgency += 1;
+            }
         }
     }
+} else {
+    $driversInAgency = 1;
 }
 //Ajout du nombre de drivers dans l'agence
 foreach ($shifts as $shift => $drivers) {
