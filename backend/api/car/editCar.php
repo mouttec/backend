@@ -18,6 +18,8 @@ $car->brandCar = $decodedData->brandCar;
 $car->modelCar = $decodedData->modelCar;
 $car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
 $car->motorizationCar = $decodedData->motorizationCar;
+$car->versionCar = $decodedData->versionCar;
+$car->colorCar = $decodedData->colorCar;
 
 $uploadDirectory = 'grayCards/';
 $extensions = [
@@ -36,8 +38,6 @@ if (isset($_FILES) && !empty($_FILES['image'])) {
     } else {
         echo json_encode('Le format de l\'image '. $_FILES['image']['name'] .' n\'est pas bon');
     }
-} else {
-    echo json_encode('Pas d\'image attachée');
 }
 
 if(!empty($decodedData->idCar)) {
@@ -45,6 +45,7 @@ if(!empty($decodedData->idCar)) {
     $result = $car->updateCar($car);
 } else {
     $result = $car->createCar($car);
+    $car->addGrayCardToCar($car);
 }
 
 if ($result) {

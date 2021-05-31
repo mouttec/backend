@@ -32,8 +32,7 @@ class Car
             dateOfCirculationCar = :dateOfCirculationCar,
             motorizationCar = :motorizationCar,
             colorCar = :colorCar,
-            versionCar = :versionCar,
-            urlGrayCard = :urlGrayCard
+            versionCar = :versionCar
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -44,8 +43,7 @@ class Car
             "dateOfCirculationCar" => htmlspecialchars(strip_tags($this->dateOfCirculationCar)),
             "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar)),
             "colorCar" => htmlspecialchars(strip_tags($this->colorCar)),
-            "versionCar" => htmlspecialchars(strip_tags($this->versionCar)),
-            "urlGrayCard" => $this->urlGrayCard
+            "versionCar" => htmlspecialchars(strip_tags($this->versionCar))
         ];
 
         if($stmt->execute($params)) {
@@ -114,6 +112,29 @@ class Car
         if($stmt->execute($params)) {
             $row = $stmt->fetch();
             return $row;
+        }
+        return false;
+    }
+
+    public function addGrayCardToCar()
+    {
+        $query = "
+            UPDATE "
+            . $this->table .
+            " SET
+            urlGrayCard = :urlGrayCard
+            WHERE
+            licensePlateCar = :licensePlateCar       
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "urlGrayCard" => htmlspecialchars(strip_tags($this->urlGrayCard)),
+            "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar))
+        ];
+
+        if($stmt->execute($params)) {
+            return true;
         }
         return false;
     }

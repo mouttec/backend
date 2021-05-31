@@ -73,14 +73,14 @@ if (!$carData) {
         $car->colorCar = $carData['colorCar'];
         $car->versionCar = $carData['versionCar'];
         $car->motorizationCar = $carData['motorizationCar'];
-        $result = $car->createCar($car);
-        if (isset($decodedData->idCustomer)) {
-            $car->idCustomer = $decodedData->idCustomer;
-            $car->bindCustomerToCar($car);
-        }
-        if ($result) {
-        	echo json_encode($carData);
-        }
+        // $result = $car->createCar($car);
+        // if (isset($decodedData->idCustomer)) {
+        //     $car->idCustomer = $decodedData->idCustomer;
+        //     $car->bindCustomerToCar($car);
+        // }
+        // if ($result) {
+    	echo json_encode($car);
+        // }
     }
     catch (Exception $e) {
         echo $e."\n";
