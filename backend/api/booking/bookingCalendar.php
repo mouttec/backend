@@ -14,21 +14,6 @@ $teammate = new Teammate($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
-$quarters = ['00', '15', '30', '45'];
-$shifts = array(); 
-for ($h = 7; $h <= 20; $h++) {
-    foreach ($quarters as $quarter) {
-        if (strlen($h) == 1) {
-            $timecode = '0'.$h.':'.$quarter;
-        } else {
-            $timecode = $h.':'.$quarter;
-        }
-        //On retire les créaneaux non disponibles dans le calendrier
-        if (($timecode != '07:00') && ($timecode != '07:15') && ($timecode != '20:30') && ($timecode != '20:30')) {
-            array_push($shifts, $timecode);
-        }
-    }
-}
 //Recherche du nombre de teammates "drivers" disponibles dans l'agence concernée 
 if (isset($decodedData->idAgency)) {
     $teammate->idAgency = $decodedData->idAgency;
@@ -46,10 +31,23 @@ if (isset($decodedData->idAgency)) {
 } else {
     $driversInAgency = 1;
 }
-//Ajout du nombre de drivers dans l'agence
-foreach ($shifts as $shift => $drivers) {
-    $shifts[$shift] = $driversInAgency;
+
+$quarters = ['00', '15', '30', '45'];
+$shifts = array(); 
+for ($h = 7; $h <= 20; $h++) {
+    foreach ($quarters as $quarter) {
+        if (strlen($h) == 1) {
+            $timecode = '0'.$h.':'.$quarter;
+        } else {
+            $timecode = $h.':'.$quarter;
+        }
+        //On retire les créaneaux non disponibles dans le calendrier
+        if (($timecode != '07:00') && ($timecode != '07:15') && ($timecode != '20:30') && ($timecode != '20:30')) {
+            $shifts[$timecode] = $driversInAgency;
+        }
+    }
 }
+
 //Création des lignes jours dans le calendrier, remplie chacune avec les shifts
 $calendar = array();
 for ($i = 0; $i < 60; $i++) {

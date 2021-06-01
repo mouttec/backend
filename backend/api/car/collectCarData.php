@@ -5,10 +5,13 @@ header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-With");
 include_once "../../config/Database.php";
 include_once "../../models/Car.php";
+
 $db = new Database();
 $conn = $db->connect();
 $car = new Car($conn);
+
 $decodedData = json_decode(file_get_contents("php://input"));
+
 $rawPlate = $decodedData->licensePlateCar;
 //On retire les espaces et tiret éventuels
 $carPlate = strtoupper(str_replace(["-", " "], "", $rawPlate));
