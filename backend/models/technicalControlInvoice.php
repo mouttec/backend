@@ -1,5 +1,5 @@
 <?php
-class technicalControlInvoice 
+class TechnicalControlInvoice 
 {
     private $conn;
     private $table = "technicalControlInvoices";
@@ -21,20 +21,18 @@ class technicalControlInvoice
             INSERT INTO "
             . $this->table .
             " SET
-            idTechnicalControlInvoices = :idTechnicalControlInvoices,
             idPartner = :idPartner,
             monthlyInvoice = :monthlyInvoice,
-            urlInvoice = :modelCar,
+            urlInvoice = :urlInvoice,
             priceInvoice = :priceInvoice
         ";
         $stmt = $this->conn->prepare($query);
 
         $params = [
-            "idTechnicalControlInvoices" => htmlspecialchars(strip_tags($this->idCustomer)),
-            "idPartner" => htmlspecialchars(strip_tags($this->licensePlateCar)),
-            "monthlyInvoice" => htmlspecialchars(strip_tags($this->brandCar)),
-            "urlInvoice" => "adresseServeur/technicalControlInvoice" . htmlspecialchars(strip_tags($this->urlInvoice)),
-            "priceInvoice" => htmlspecialchars(strip_tags($this->dateOfCirculationCar))
+            "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
+            "monthlyInvoice" => htmlspecialchars(strip_tags($this->monthlyInvoice)),
+            "urlInvoice" => "technicalControlInvoices/" . htmlspecialchars(strip_tags($this->urlInvoice)),
+            "priceInvoice" => htmlspecialchars(strip_tags($this->priceInvoice))
         ];
 
         if($stmt->execute($params)) {
@@ -64,7 +62,7 @@ class technicalControlInvoice
             WHERE idPartner = :idPartner";
         $stmt = $this->conn->prepare($query);
 
-        $params = ["idPartner" => htmlspecialchars(strip_tags($this->idCustomer))];
+        $params = ["idPartner" => htmlspecialchars(strip_tags($this->idPartner))];
 
         if($stmt->execute($params)) {
             return $stmt;
@@ -88,33 +86,4 @@ class technicalControlInvoice
         }
         return false;
     }
-
-    public function updateInvoices() 
-    {
-        $query = "
-            UPDATE "
-            . $this->table .
-            " SET
-            idPartner = :idPartner,
-            monthlyInvoice = :monthlyInvoice,
-            urlInvoice = :modelCar,
-            priceInvoice = :priceInvoice
-            WHERE
-            idTechnicalControlInvoices = :idTechnicalControlInvoices  
-        ";
-        $stmt = $this->conn->prepare($query);
-
-        $params = [
-            "idTechnicalControlInvoices" => htmlspecialchars(strip_tags($this->idCustomer)),
-            "idPartner" => htmlspecialchars(strip_tags($this->licensePlateCar)),
-            "monthlyInvoice" => htmlspecialchars(strip_tags($this->brandCar)),
-            "urlInvoice" => "adresseServeur/technicalControlInvoice" . htmlspecialchars(strip_tags($this->urlInvoice)),
-            "priceInvoice" => htmlspecialchars(strip_tags($this->dateOfCirculationCar))
-        ];
-
-        if($stmt->execute($params)) {
-            return true;
-        }
-        return false;
-    }  
 }

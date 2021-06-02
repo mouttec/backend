@@ -1,3 +1,4 @@
+
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -6,12 +7,14 @@ include_once "../../config/Database.php";
 include_once "../../models/Booking.php";
 include_once "../../models/Customer.php";
 include_once "../../models/Car.php";
+include_once "../../models/CarProcess.php";
 
 $db = new Database();
 $conn = $db->connect();
 $booking = new Booking($conn);
 $customer = new Customer($conn);
 $car = new Car($conn);
+$carProcess = new CarProcess($conn);
 
 if (isset($_GET['idBooking'])) {
     $booking->idBooking = $_GET['idBooking'];
@@ -20,15 +23,17 @@ if (isset($_GET['idBooking'])) {
     $thisCustomer = $customer->searchCustomerById($customer);
     $car->idCar = $thisBooking['idCar'];
     $thisCar = $car->searchCarById($car);
+    $carProcess->idProcess = $thisBooking['idProcess'];
+    $thisCarProcess = $carProcess->searchCarProcessById($carProcess);
     $result = array();
-    array_push($result, $thisBooking, $thisCustomer, $thisCar);
+    array_push($result, $thisBooking, $thisCustomer, $thisCar, $thisCarProcess);
 } else {
     if (isset($_GET['idPartner'])) {
         $booking->idPartner = $_GET['idPartner'];
         $bookings = $booking->searchBookingsByPartner($booking);
     } elseif (isset($_GET['idCustomer'])) {
         $booking->idCustomer = $_GET['idCustomer'];
-        $bookings = $booking->searchBookingsByCustomer($bookings);
+        $bookings = $booking->searchBookingsByCustomer($booking);
     } elseif (isset($_GET['idAgency'])) {
         $booking->idAgency = $_GET['idAgency'];
         $bookings = $booking->searchBookingsByAgency($booking);
@@ -43,35 +48,56 @@ if (isset($_GET['idBooking'])) {
         $bookings_array = array();
         while ($row = $bookings->fetch()) {
             extract($row);
+            if (!is_null($dateForth)) {
+                $datecode = implode('-', array_reverse(explode('/', $dateForth)));
+                $timecode = str_replace(':', '', $hoursForth);
+            } else {
+                $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
+                $timecode = str_replace(':', '', $hoursBack);               
+            }
             $booking_item = [
-                 "idBooking" => $idBooking,
-                 "idCustomer" => $idCustomer,
-                 "idPartner" => $idPartner,
-                 "hoursForth" => $hoursForth,
-                 "dateForth" => $dateForth,
-                 "statusBooking" => $statusBooking,
-                 "formulaBooking" => $formulaBooking,
-                 "dateBack" => $dateBack,
-                 "hoursBack" => $hoursBack,
-                 "idCar" => $idCar,
-                 "idForthAddress" => $idForthAddress,
-                 "idBackAddress" => $idBackAddress,
-                 "idAgency" => $idAgency,
-                 "distanceForth" => $distanceForth,
-                 "durationForth" => $durationForth,
-                 "distanceBack" => $distanceBack,
-                 "durationBack" => $durationBack,
-                 "originBooking" => $originBooking,
-                 "dateBooking" => $dateBooking
+                     "idBooking" => $idBooking,
+                     "idCustomer" => $idCustomer,
+                     "idPartner" => $idPartner,
+                     "hoursForth" => $hoursForth,
+                     "dateForth" => $dateForth,
+                     "statusBooking" => $statusBooking,
+                     "formulaBooking" => $formulaBooking,
+                     "dateBack" => $dateBack,
+                     "hoursBack" => $hoursBack,
+                     "idCar" => $idCar,
+                     "idForthAddress" => $idForthAddress,
+                     "idBackAddress" => $idBackAddress,
+                     "idAgency" => $idAgency,
+                     "distanceForth" => $distanceForth,
+                     "durationForth" => $durationForth,
+                     "distanceBack" => $distanceBack,
+                     "durationBack" => $durationBack,
+                     "originBooking" => $originBooking,
+                     "dateBooking" => $dateBooking,
+                     "datecode" => $datecode,
+                     "timecode" => $timecode
             ];
             $customer->idCustomer = $idCustomer;
             $thisCustomer = $customer->searchCustomerById($customer);
             $car->idCar = $idCar;
             $thisCar = $car->searchCarById($car);
-            array_push($booking_item, $thisCustomer, $thisCar);
+            $carProcess->idProcess = $idProcess;
+            $thisCarProcess = $carProcess->searchCarProcessById($carProcess);
+            // $booking_item['customerData'] = $thisCustomer;
+            // $booking_item['carData'] = $thisCar;
+            array_push($booking_item, $thisCustomer, $thisCar, $thisCarProcess);
             array_push($bookings_array, $booking_item);
         }
+        if ($counter > 1) {
+            $date  = array_column($bookings_array, 'datecode');
+            $time = array_column($bookings_array, 'timecode');
+            array_multisort($date, SORT_ASC, $time, SORT_ASC, $bookings_array);
+        }
         $result = $bookings_array;
+        if (isset($_GET['listLength'])) {
+            array_splice($result, 0, -$_GET['listLength']);
+        }
     }
 }
 

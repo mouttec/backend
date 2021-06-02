@@ -11,6 +11,8 @@ class Car
     public $modelCar;
     public $dateOfCirculationCar;
     public $motorizationCar;
+    public $colorCar;
+    public $versionCar;
     public $urlGrayCard;
 
     public function __construct($db) 
@@ -24,22 +26,24 @@ class Car
             INSERT INTO "
             . $this->table .
             " SET
-            idCustomer = :idCustomer,
             licensePlateCar = :licensePlateCar,
             brandCar = :brandCar,
             modelCar = :modelCar,
             dateOfCirculationCar = :dateOfCirculationCar,
-            motorizationCar = :motorizationCar
+            motorizationCar = :motorizationCar,
+            colorCar = :colorCar,
+            versionCar = :versionCar
         ";
         $stmt = $this->conn->prepare($query);
 
         $params = [
-            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
             "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar)),
             "brandCar" => htmlspecialchars(strip_tags($this->brandCar)),
             "modelCar" => htmlspecialchars(strip_tags($this->modelCar)),
             "dateOfCirculationCar" => htmlspecialchars(strip_tags($this->dateOfCirculationCar)),
-            "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar))
+            "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar)),
+            "colorCar" => htmlspecialchars(strip_tags($this->colorCar)),
+            "versionCar" => htmlspecialchars(strip_tags($this->versionCar))
         ];
 
         if($stmt->execute($params)) {
@@ -112,6 +116,52 @@ class Car
         return false;
     }
 
+    public function addGrayCardToCar()
+    {
+        $query = "
+            UPDATE "
+            . $this->table .
+            " SET
+            urlGrayCard = :urlGrayCard
+            WHERE
+            licensePlateCar = :licensePlateCar       
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "urlGrayCard" => htmlspecialchars(strip_tags($this->urlGrayCard)),
+            "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar))
+        ];
+
+        if($stmt->execute($params)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function bindCustomerToCar() 
+    {
+        $query = "
+            UPDATE "
+            . $this->table .
+            " SET
+            idCustomer = :idCustomer
+            WHERE
+            licensePlateCar = :licensePlateCar       
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
+            "licensePlateCar" => htmlspecialchars(strip_tags($this->licensePlateCar))
+        ];
+
+        if($stmt->execute($params)) {
+            return true;
+        }
+        return false;
+    }
+
     public function updateCar() 
     {
         $query = "
@@ -124,6 +174,8 @@ class Car
             modelCar = :modelCar,
             dateOfCirculationCar = :dateOfCirculationCar,
             motorizationCar = :motorizationCar,
+            colorCar = :colorCar,
+            versionCar = :versionCar,
             urlGrayCard = :urlGrayCard
             WHERE
             idCar = :idCar       
@@ -137,6 +189,8 @@ class Car
             "modelCar" => htmlspecialchars(strip_tags($this->modelCar)),
             "dateOfCirculationCar" => htmlspecialchars(strip_tags($this->dateOfCirculationCar)),
             "motorizationCar" => htmlspecialchars(strip_tags($this->motorizationCar)),
+            "colorCar" => htmlspecialchars(strip_tags($this->colorCar)),
+            "versionCar" => htmlspecialchars(strip_tags($this->versionCar)),
             "urlGrayCard" => htmlspecialchars(strip_tags($this->urlGrayCard)),
             "idCar" => htmlspecialchars(strip_tags($this->idCar))
         ];

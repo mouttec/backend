@@ -220,7 +220,7 @@ class Teammate {
         $stmt = $this->conn->prepare($query);
 
         $params = [
-            "statusTeammate" => "Inactif·ve",
+            "statusTeammate" => 0,
             "idTeammate" => htmlspecialchars(strip_tags($this->idTeammate))
         ];
 

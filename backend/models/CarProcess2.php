@@ -1,6 +1,5 @@
 <?php
-class CarProcess
-{
+class Agency {
     private $conn;
     private $table = "carsProcessing";
 
@@ -11,13 +10,11 @@ class CarProcess
     public $idAgency;
     public $carStatus;
 
-    public function __construct($db) 
-    {
+    public function __construct($db) {
         $this->conn = $db;
     }
 
-    public function createNewCarProcess() 
-    {
+    public function createNewCarProcess() {
         $query = "
             INSERT INTO "
             . $this->table .
@@ -28,8 +25,8 @@ class CarProcess
             idAgency = :idAgency,
             carStatus = :carStatus
         ";
-        $stmt = $this->conn->prepare($query);
 
+        $stmt = $this->conn->prepare($query);
         $params = [
             "idCar" => htmlspecialchars(strip_tags($this->idCar)),
             "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
@@ -38,38 +35,8 @@ class CarProcess
             "carStatus" => htmlspecialchars(strip_tags($this->carStatus))
         ];
 
-        if($stmt->execute($params)) {
+        if ($stmt->execute($params)) {
             return true;
-        }
-        return false;
-    }
-
-    public function listCarsInProcess() 
-    {
-        $query = "
-        SELECT *
-        FROM "
-        . $this->table;
-        $stmt = $this->conn->prepare($query);
-
-        $stmt->execute();
-
-        return $stmt;
-    }
-
-    public function listCarProcessesByAgency() 
-    {
-        $query = "
-            SELECT *
-            FROM " . $this->table . "
-            WHERE idAgency = :idAgency
-            ORDRE BY idCar ASC";
-        $stmt = $this->conn->prepare($query);
-
-        $params = ["idAgency" => htmlspecialchars(strip_tags($this->idAgency))];
-
-        if($stmt->execute($params)) {
-            return $stmt;
         }
         return false;
     }
@@ -91,25 +58,37 @@ class CarProcess
         return false;
     }
 
+
+    public function listCarsInProcess() {
+        $query = "
+        SELECT *
+        FROM "
+        . $this->table;
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->execute();
+
+        return $stmt;
+    }
+
     public function listCarProcessesByBooking() 
     {
         $query = "
             SELECT *
             FROM " . $this->table . "
-            WHERE idBooking = :idBooking";
+            WHERE idBooking = :idBooking
+            ORDRE BY idCar ASC";
         $stmt = $this->conn->prepare($query);
 
         $params = ["idBooking" => htmlspecialchars(strip_tags($this->idBooking))];
 
         if($stmt->execute($params)) {
-            $row = $stmt->fetch();
-            return $row;
+            return $stmt;
         }
         return false;
     }
 
-    public function searchCarProcessById() 
-    {
+    public function searchCarProcessById() {
         $query = "
             SELECT *
             FROM " . $this->table . "
@@ -163,5 +142,5 @@ class CarProcess
             return true;
         }
         return false;         
-    }   
+    }  
 }

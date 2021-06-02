@@ -19,54 +19,11 @@ class Partner
     public $datePartner;
     public $idAgency;
     public $typeBilling;
+    public $partnerKey;
 
     public function __construct($db) 
     {
         $this->conn = $db;
-    }
-
-    public function createPartner() 
-    {
-        $query = "
-            INSERT INTO "
-            . $this->table .
-            " SET 
-            usernamePartner = :usernamePartner,
-            namePartner = :namePartner,
-            mixedPassword = :mixedPassword,
-            addressPartner = :addressPartner,
-            phonePartner = :phonePartner,
-            statusPartner = :statusPartner,
-            typePartner = :typePartner,
-            mailPartner = :mailPartner,        
-            nameBilling = :nameBilling,
-            siretPartner = :siretPartner,
-            addressBilling = :addressBilling,
-            idAgency = :idAgency,
-            typeBilling = :typeBilling
-        ";
-        $stmt = $this->conn->prepare($query);
-
-        $params = [
-            "usernamePartner" => htmlspecialchars(strip_tags($this->usernamePartner)),
-            "mixedPassword" => password_hash($this->mixedPassword, PASSWORD_DEFAULT),
-            "namePartner" => htmlspecialchars(strip_tags($this->namePartner)),
-            "addressPartner" => htmlspecialchars(strip_tags($this->addressPartner)),
-            "phonePartner" => htmlspecialchars(strip_tags($this->phonePartner)),
-            "statusPartner" => htmlspecialchars(strip_tags($this->statusPartner)),
-            "typePartner" => htmlspecialchars(strip_tags($this->typePartner)),
-            "mailPartner" => htmlspecialchars(strip_tags($this->mailPartner)),
-            "nameBilling" => htmlspecialchars(strip_tags($this->nameBilling)),
-            "siretPartner" => htmlspecialchars(strip_tags($this->siretPartner)),
-            "addressBilling" => htmlspecialchars(strip_tags($this->addressBilling)),
-            "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
-            "typeBilling" => htmlspecialchars(strip_tags($this->typeBilling))
-        ];
-
-        if ($stmt->execute($params)) {
-            return true; 
-        }
-        return false;
     }
 
     public function listPartners() 
@@ -99,7 +56,8 @@ class Partner
         $params = ["idAgency" => htmlspecialchars(strip_tags($this->idAgency))];
 
         if ($stmt->execute($params)) {
-            return $stmt;
+            $row = $stmt->fetch();  
+            return $row;
         }
         return false;
     }
@@ -140,6 +98,52 @@ class Partner
         return false;
     }
 
+    public function createPartner() 
+    {
+        $query = "
+            INSERT INTO "
+            . $this->table .
+            " SET 
+            usernamePartner = :usernamePartner,
+            namePartner = :namePartner,
+            mixedPassword = :mixedPassword,
+            addressPartner = :addressPartner,
+            phonePartner = :phonePartner,
+            statusPartner = :statusPartner,
+            typePartner = :typePartner,
+            mailPartner = :mailPartner,        
+            nameBilling = :nameBilling,
+            siretPartner = :siretPartner,
+            addressBilling = :addressBilling,
+            idAgency = :idAgency,
+            typeBilling = :typeBilling,
+            partnerKey = :partnerKey
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "usernamePartner" => htmlspecialchars(strip_tags($this->usernamePartner)),
+            "mixedPassword" => password_hash($this->mixedPassword, PASSWORD_DEFAULT),
+            "namePartner" => htmlspecialchars(strip_tags($this->namePartner)),
+            "addressPartner" => htmlspecialchars(strip_tags($this->addressPartner)),
+            "phonePartner" => htmlspecialchars(strip_tags($this->phonePartner)),
+            "statusPartner" => htmlspecialchars(strip_tags($this->statusPartner)),
+            "typePartner" => htmlspecialchars(strip_tags($this->typePartner)),
+            "mailPartner" => htmlspecialchars(strip_tags($this->mailPartner)),
+            "nameBilling" => htmlspecialchars(strip_tags($this->nameBilling)),
+            "siretPartner" => htmlspecialchars(strip_tags($this->siretPartner)),
+            "addressBilling" => htmlspecialchars(strip_tags($this->addressBilling)),
+            "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+            "typeBilling" => htmlspecialchars(strip_tags($this->typeBilling)),
+            "partnerKey" => htmlspecialchars(strip_tags($this->partnerKey))
+        ];
+
+        if ($stmt->execute($params)) {
+            return true; 
+        }
+        return false;
+    }
+
     public function updatePartner() 
     //update complet sauf mot de passe
     {
@@ -158,7 +162,8 @@ class Partner
             siretPartner = :siretPartner,
             addressBilling = :addressBilling,
             idAgency = :idAgency,
-            typeBilling = :typeBilling
+            typeBilling = :typeBilling,
+            partnerKey = :partnerKey
             WHERE
             idPartner = :idPartner
         ";
@@ -176,6 +181,7 @@ class Partner
             "addressBilling" => htmlspecialchars(strip_tags($this->addressBilling)),
             "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
             "typeBilling" => htmlspecialchars(strip_tags($this->typeBilling)),
+            "partnerKey" => htmlspecialchars(strip_tags($this->partnerKey)),
             "idPartner" => htmlspecialchars(strip_tags($this->idPartner))
         ];
 

@@ -57,6 +57,8 @@ if (empty($decodedData->idCar)) {
     $car->modelCar = $decodedData->modelCar;
     $car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
     $car->motorizationCar = $decodedData->motorizationCar;
+    $car->versionCar = $decodedData->versionCar;
+    $car->colorCar = $decodedData->colorCar;
     $car->createCar($car);
     $thisCar = $car->searchCarByPlate($car);
     //$thisCar->idCar créé
@@ -64,6 +66,9 @@ if (empty($decodedData->idCar)) {
     $car->idCar = $decodedData->idCar;
     $thisCar = $car->searchCarById($car);
 }
+
+$car->idCar = $thisCar->idCar;
+$car->bindCustomerToCar($car);
 
 if (!empty($decodedData->addressStreetNumber)) {
     //adresse aller = domicile client > partenaire

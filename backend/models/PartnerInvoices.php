@@ -118,7 +118,7 @@ class PartnerInvoices
         $stmt = $this->conn->prepare($query);
 
         $params = [
-            "idPartner" => htmlspecialchars(strip_tags($this->idPartner));
+            "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
             "invoiceDate" => htmlspecialchars(strip_tags($this->invoiceDate))
         ];
 

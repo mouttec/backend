@@ -1,7 +1,10 @@
 <?php
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, HEAD, OPTIONS, POST, PUT");
+
 include_once "../../config/Database.php";
 include_once "../../models/Partner.php";
 

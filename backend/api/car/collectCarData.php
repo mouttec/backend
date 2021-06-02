@@ -36,7 +36,7 @@ if (is_numeric(substr($carPlate, 0, 1))) {
 }
 $car->licensePlateCar = $carPlate;
 $carData = $car->searchCarByPlate($car);
-if (empty($carData[0])) {
+if (!$carData) {
     try {
         $options = [
             'soap_version' => SOAP_1_2,
@@ -67,17 +67,20 @@ if (empty($carData[0])) {
                 "motorizationCar" => $valeur1->puisCh,
             ];
         }
-        $car->idCustomer = $decodedData->idCustomer;
         $car->brandCar = $carData['brandCar'];
         $car->modelCar = $carData['modelCar'];
         $car->dateOfCirculationCar = str_replace('-', '',$carData['dateOfCirculationCar']->jour.'/'.$carData['dateOfCirculationCar']->mois.'/'.$carData['dateOfCirculationCar']->annee);
         $car->colorCar = $carData['colorCar'];
         $car->versionCar = $carData['versionCar'];
         $car->motorizationCar = $carData['motorizationCar'];
-        $result = $car->createCar($car);
-        if ($result) {
-        	echo json_encode($carData);
-        }
+        // $result = $car->createCar($car);
+        // if (isset($decodedData->idCustomer)) {
+        //     $car->idCustomer = $decodedData->idCustomer;
+        //     $car->bindCustomerToCar($car);
+        // }
+        // if ($result) {
+    	echo json_encode($car);
+        // }
     }
     catch (Exception $e) {
         echo $e."\n";

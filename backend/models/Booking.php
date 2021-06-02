@@ -176,6 +176,26 @@ class Booking {
         }
         return false;
     }
+
+        public function searchBookingsForCalendar() 
+    {
+        $query = "
+        SELECT *
+        FROM bookings
+        WHERE (idAgency = :idAgency AND dateBooking >= :startDate AND dateBooking <= :endDate)";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+            "startDate" => date('d/m/Y'),
+            "endDate" => date('d/m/Y', strtotime('+60 days'))
+        ];
+
+        if($stmt->execute($params)) {
+            return $stmt;
+        }
+        return false;
+    }
  
     public function updateBooking() 
     {
