@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Methods: POST");
-include_once("database.php");
+include_once("../../config/database.php");
 include_once "../../models/Teammate.php";
 
 $db = new Database();
@@ -11,7 +11,7 @@ $teammate = new Teammate($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 $teammate->usernameTeammate = $decodedData->usernameTeammate;
-$password = htmlspecialchars($decodedData->$password);
+$password = htmlspecialchars($decodedData->password);
 
 $teammateExists = $teammateRequest->searchTeammateByUsername($teammate);
 
