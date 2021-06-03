@@ -13,7 +13,7 @@ $decodedData = json_decode(file_get_contents("php://input"));
 $teammate->usernameTeammate = $decodedData->usernameTeammate;
 $password = htmlspecialchars($decodedData->password);
 
-$teammateExists = $teammateRequest->searchTeammateByUsername($teammate);
+$teammateExists = $teammate->searchTeammateByUsername($teammate);
 
 if ((!empty($teammateExists)) && (password_verify($password, $teammateExists['mixedPassword']))) {
   		echo json_encode($teammateExists);
