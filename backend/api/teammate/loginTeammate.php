@@ -15,6 +15,8 @@ $password = htmlspecialchars($decodedData->password);
 
 $teammateExists = $teammate->searchTeammateByUsername($teammate);
 
+echo json_encode($teammateExists);
+
 if (!empty($teammateExists)) {
 	if (password_verify($password, $teammateExists['mixedPassword'])) {
 		echo json_encode($teammateExists);
