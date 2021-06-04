@@ -10,17 +10,25 @@ $conn = $db->connect();
 $teammate = new Teammate($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
+
 $teammate->usernameTeammate = $decodedData->usernameTeammate;
-$password = htmlspecialchars($decodedData->password);
+$teammate->mixedPassword = $decodedData->oldPassword;
+$newPassword = $decodedData->newPassword;
 
 $teammateExists = $teammate->searchTeammateByUsername($teammate);
 
 if ((!empty($teammateExists)) {
-	if (password_verify($password, $teammateExists['mixedPassword'])) {
-		echo json_encode($teammateExists);
+	if (password_verify($teammate->mixedPassword, $teammateExists['mixedPassword'])) {
+		$teammate->mixedPassword = $newPassword;
+		$result = $teammate->passwordUpdate($teammate);
+		if ($result) {
+			echo json_encode('Le mot de passe a été modifié');
+		} else {
+			echo json_encode('Le mot de passe n\'a pas pu être modifié');
+		}
 	} else {
 		echo json_encode('Le mot de passe est erroné');
 	}  		
 } else {
-  	echo json_encode('Le nom d\'utilisateur n\'existe pas);
+  	echo json_encode('Le nom d\'utilisateur n\'existe pas');
 }

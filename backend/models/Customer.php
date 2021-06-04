@@ -224,7 +224,7 @@ class Customer {
         return false;
     }
 
-    public function updatePasswordCustomer() 
+    public function passwordUpdate() 
     {
         $query = "
             UPDATE "

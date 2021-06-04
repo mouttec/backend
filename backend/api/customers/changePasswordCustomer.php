@@ -3,22 +3,25 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Content-Type: application/json");
 header("Access-Control-Allow-Headers: Access-Control-Allow-Headers, Access-Control-Allow-Methods, Content-Type, Authorization, X-Requested-With");
-include_once "../../config/Database.php";
-include_once "../../models/Partner.php";
+include_once("../../config/Database.php");
+include_once "../../models/Customer.php";
 
 $db = new Database();
 $conn = $db->connect();
-$partner = new Partner($conn);
+$customer = new Customer($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
-$partner->idPartner = $decodedData->idPartner;
-$partner->mixedPassword = $decodedData->password;
+$customer->mailCustomer = $decodedData->mailCustomer;
+$customer->mixedPassword = $decodedData->oldPassword;
+$newPassword = $decodedData->newPassword;
 
-if ((!empty($partnerExists)) {
-	if (password_verify($partner->mixedPassword, $partnerExists['mixedPassword'])) {
-		$partner->mixedPassword = $newPassword;
-		$result = $partner->passwordUpdate($partner);
+$customerExists = $customer->searchCustomerByEmail($customer);
+
+if ((!empty($customerExists)) {
+	if (password_verify($customer->mixedPassword, $customerExists['mixedPassword'])) {
+		$customer->mixedPassword = $newPassword;
+		$result = $customer->passwordUpdate($customer);
 		if ($result) {
 			echo json_encode('Le mot de passe a été modifié');
 		} else {
