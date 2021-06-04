@@ -22,5 +22,5 @@ if (!empty($teammateExists)) {
 		echo json_encode('Le mot de passe est erroné');
 	}  		
 } else {
-  	echo json_encode('Le nom d\'utilisateur n\'existe pas);
+  	echo json_encode('Le nom d\'utilisateur n\'existe pas');
 }
