@@ -29,6 +29,8 @@ $extensions = [
     'gif'
 ];
 
+echo json_encode($_FILES);
+
 if ((isset($_FILES)) && (!empty($_FILES['image']))) {
     echo json_encode('isset$_FILES ok');
     $extension = strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
