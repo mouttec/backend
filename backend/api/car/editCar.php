@@ -29,11 +29,14 @@ $extensions = [
     'gif'
 ];
 
-if (isset($_FILES) && !empty($_FILES['image'])) {
+if ((isset($_FILES)) && (!empty($_FILES['image']))) {
+    echo json_encode('isset$_FILES ok');
     $extension = strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
+        echo json_encode('extension ok');
 		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
-		move_uploaded_file($_FILES['image']['tmp_name'], '../../' . $uploadDirectory . $saveName);
+        echo json_encode('$saveName = '.$saveName);
+		move_uploaded_file($_FILES['image']['tmp_name'], $uploadDirectory . $saveName);
 		$car->urlGrayCard = $saveName;
     } else {
         echo json_encode('Le format de l\'image '. $_FILES['image']['name'] .' n\'est pas bon');
