@@ -22,7 +22,7 @@ $decodedData = json_decode(file_get_contents("php://input"));
 // $car->colorCar = $decodedData->colorCar;
 
 // $uploadDirectory = 'grayCards/';
-$uploadDirectory = '';
+$uploadDirectory = 'greyCards/';
 $extensions = [
     'jpg',
     'jpeg',
@@ -30,11 +30,15 @@ $extensions = [
     'gif'
 ];  
 
-$file = $_FILES['file']['name'];;
+$file = $_FILES['greyCard']['name'];
+$tempName = $_FILES['greyCard']['tmp_name'];
+$error = $_FILES['greyCard']['error'];
 
 echo json_encode($file);
+echo json_encode($tempName);
+echo json_encode($error);
 
-if (!empty($file) {
+if (!empty($file)) {
     echo json_encode('isset$_FILES ok');
     $extension = strtolower(pathinfo($file,PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
@@ -42,10 +46,10 @@ if (!empty($file) {
 //		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
         $saveName = 'nom_de_sauvegarde'.'-'.uniqid().$extension;
         echo json_encode('$saveName = '.$saveName);
-		move_uploaded_file($_FILES['saveName']['tmp_name'], $uploadDirectory);
+		move_uploaded_file($tempName, $uploadDirectory);
 //		$car->urlGrayCard = $saveName;
     } else {
-        echo json_encode('Le format de l\'image '. $_FILES['saveName']['name'] .' n\'est pas bon');
+        echo json_encode('Le format de l\'image '. $file .' n\'est pas bon');
     }
 }
 
