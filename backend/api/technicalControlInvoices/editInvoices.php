@@ -9,21 +9,34 @@ include_once "../../models/TechnicalControlInvoice.php";
 $db = new Database();
 $conn = $db->connect();
 $technicalControlInvoice = new TechnicalControlInvoice($conn);
-$target_dir = 'technicalControlInvoice/';
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
 $technicalControlInvoice->idPartner = $decodedData->idPartner;
 $technicalControlInvoice->monthlyInvoice = $decodedData->monthlyInvoice;
 $technicalControlInvoice->priceInvoice = $decodedData->priceInvoice;
-$filenameTechnicalControlInvoice = $decodedData->filenameTechnicalControlInvoice;
-$technicalControlInvoice->urlInvoice = $technicalControlInvoice->$target_dir.$idPartner."/".$filenameTechnicalControlInvoice;
 
-foreach($technicalControlInvoice as $value) {
-    move_uploaded_file($value['filenameTechnicalControlInvoice'], './'.$target_dir.$idPartner."/".$value['filenameTechnicalControlInvoice']);
+$uploadDirectory = 'factureTEchnicalControl/';
+$extensions = [
+    'jpg',
+    'jpeg',
+    'png',
+    'gif'
+];
+
+if (isset($_FILES) && !empty($_FILES['image'])) {
+    echo json_encode('isset$_FILES ok');
+    $extension = strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
+    if (in_array($extension, $extensions)) {
+		$saveName = htmlspecialchars(strip_tags($decodedData->idPartner)).'-'.htmlspecialchars(strip_tags($decodedData->monthlyInvoice)).'-'.uniqid().$extension;
+		move_uploaded_file($_FILES['image']['tmp_name'], '../../' . $uploadDirectory . $saveName);
+		$technicalControlInvoice->urlInvoice = $saveName;
+    } else {
+        echo json_encode('Le format de l\'image '. $_FILES['image']['name'] .' n\'est pas bon');
+    }
 }
 
-$result = $technicalControlInvoice->createInvoice($technicalControlInvoice);
+    $result = $technicalControlInvoice->createInvoice($technicalControlInvoice);
 
 if ($result) {
     echo json_encode([ "message" => "La facture a été édité !" ]);

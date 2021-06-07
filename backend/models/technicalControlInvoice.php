@@ -31,7 +31,7 @@ class TechnicalControlInvoice
         $params = [
             "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
             "monthlyInvoice" => htmlspecialchars(strip_tags($this->monthlyInvoice)),
-            "urlInvoice" => "technicalControlInvoices/" . htmlspecialchars(strip_tags($this->urlInvoice)),
+            "urlInvoice" => htmlspecialchars(strip_tags($this->urlInvoice)),
             "priceInvoice" => htmlspecialchars(strip_tags($this->priceInvoice))
         ];
 

@@ -18,6 +18,7 @@ $teammate->lastNameTeammate = $decodedData->lastNameTeammate;
 $teammate->usernameTeammate = $decodedData->usernameTeammate;
 $teammate->mailTeammate = $decodedData->mailTeammate;
 $teammate->phoneTeammate = $decodedData->phoneTeammate;
+$teammate->mixedPassword = $decodedData->password;
 $teammate->statusTeammate = $decodedData->statusTeammate;
 $teammate->jobTeammate = $decodedData->jobTeammate;
 $teammate->idAgency = $decodedData->idAgency;

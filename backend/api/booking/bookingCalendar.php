@@ -14,6 +14,24 @@ $teammate = new Teammate($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
+//Recherche du nombre de teammates "drivers" disponibles dans l'agence concernée 
+if (isset($decodedData->idAgency)) {
+    $teammate->idAgency = $decodedData->idAgency;
+    $teammates = $teammate->searchTeammatesByAgency($teammate);
+    $counter = $teammates->rowCount();
+    if ($counter > 0) {
+        $driversInAgency = 0;
+        while($row = $teammates->fetch()) {
+            extract($row);
+            if (($jobTeammate == 'driver') && ($statusTeammate == 1)) {
+                $driversInAgency += 1;
+            }
+        }
+    }
+} else {
+    $driversInAgency = 1;
+}
+
 $quarters = ['00', '15', '30', '45'];
 $shifts = array(); 
 for ($h = 7; $h <= 20; $h++) {
@@ -24,28 +42,12 @@ for ($h = 7; $h <= 20; $h++) {
             $timecode = $h.':'.$quarter;
         }
         //On retire les créaneaux non disponibles dans le calendrier
-        if (($timecode != '07:00') && ($timecode != '07:15') && ($timecode != '20:30') && ($timecode != '20:30')) {
-            array_push($shifts, $timecode);
-        }
+        if (($timecode != '07:00') && ($timecode != '07:15') && ($timecode != '12:30') && ($timecode != '12:45') && ($timecode != '13:00') && ($timecode != '13:15') && ($timecode != '20:30') && ($timecode != '20:45')) {
+            $shifts[$timecode] = $driversInAgency;
+         }
     }
 }
-//Recherche du nombre de teammates "drivers" disponibles dans l'agence concernée 
-$teammate->idAgency = $decodedData->idAgency;
-$teammates = $teammate->searchTeammatesByAgency($teammate);
-$counter = $teammates->rowCount();
-if ($counter > 0) {
-    $driversInAgency = 0;
-    while($row = $teammates->fetch()) {
-        extract($row);
-        if (($jobTeammate == 'driver') && ($statusTeammate == 1)) {
-            $driversInAgency += 1;
-        }
-    }
-}
-//Ajout du nombre de drivers dans l'agence
-foreach ($shifts as $shift => $drivers) {
-    $shifts[$shift] = $driversInAgency;
-}
+
 //Création des lignes jours dans le calendrier, remplie chacune avec les shifts
 $calendar = array();
 for ($i = 0; $i < 60; $i++) {
@@ -64,14 +66,14 @@ if ($counter > 0) {
             //$durationDelayInQuarters correspond au nombre de quart d'heure que prend la presta
             $durationDelayInQuarters = round(($durationForth+20)/15);
             for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
-                $calendar[$dateForth][date('H:i', strtotime($hoursForth . ' +' . $i*15 . ' minutes'))] -= 1;
+                $calendar[$dateForth][date('H:i', strtotime($hoursForth.' +'.$i*15 .' minutes'))] -= 1;
             }
         }
         if (!is_null($dateBack)) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
             $durationDelayInQuarters = round(($durationBack+20)/15);
             for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
-                $calendar[$dateBack][date('H:i', strtotime($hoursBack . ' +' . $i*15 . ' minutes'))] -= 1;
+                $calendar[$dateBack][date('H:i', strtotime($hoursBack.' +'.$i*15 .' minutes'))] -= 1;
             }
         }
     }

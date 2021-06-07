@@ -47,7 +47,7 @@ class Teammate {
             "usernameTeammate" => htmlspecialchars(strip_tags($this->usernameTeammate)),
             "mailTeammate" => htmlspecialchars(strip_tags($this->mailTeammate)),
             "phoneTeammate" => htmlspecialchars(strip_tags($this->phoneTeammate)),
-            "mixedPassword" => password_hash($this->mixedPassword, PASSWORD_DEFAULT),
+            "mixedPassword" => password_hash(htmlspecialchars($this->mixedPassword), PASSWORD_DEFAULT),
             "statusTeammate" => htmlspecialchars(strip_tags($this->statusTeammate)),
             "jobTeammate" => htmlspecialchars(strip_tags($this->jobTeammate)),
             "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
