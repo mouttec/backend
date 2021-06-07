@@ -28,21 +28,21 @@ $extensions = [
     'jpeg',
     'png',
     'gif'
-];
+];  
 
-$file = $decodedData->File;
+$file = $_FILES['file']['name'];;
 
 echo json_encode($file);
 
-if (!empty($_FILES['saveName'])) {
+if (!empty($file) {
     echo json_encode('isset$_FILES ok');
-    $extension = strtolower(pathinfo($_FILES['saveName']['name'],PATHINFO_EXTENSION));
+    $extension = strtolower(pathinfo($file,PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
         echo json_encode('extension ok');
 //		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
         $saveName = 'nom_de_sauvegarde'.'-'.uniqid().$extension;
         echo json_encode('$saveName = '.$saveName);
-		move_uploaded_file($_FILES['saveName']['tmp_name'], $uploadDirectory . $saveName);
+		move_uploaded_file($_FILES['saveName']['tmp_name'], $uploadDirectory);
 //		$car->urlGrayCard = $saveName;
     } else {
         echo json_encode('Le format de l\'image '. $_FILES['saveName']['name'] .' n\'est pas bon');
