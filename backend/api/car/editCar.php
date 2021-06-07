@@ -30,6 +30,9 @@ $extensions = [
     'gif'
 ];  
 
+$card = $decodedData->greyCard;
+echo json_encode($card);
+
 $file = $_FILES['greyCard']['name'];
 $tempName = $_FILES['greyCard']['tmp_name'];
 $error = $_FILES['greyCard']['error'];
