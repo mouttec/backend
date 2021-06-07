@@ -30,10 +30,11 @@ $extensions = [
     'gif'
 ];
 
-echo json_encode($_FILES['saveName']);
-echo json_encode($_FILES['saveName']['error'])
+$file = $decodedData->File;
 
-if ((isset($_FILES)) && (!empty($_FILES['saveName']))) {
+echo json_encode($file);
+
+if (!empty($_FILES['saveName'])) {
     echo json_encode('isset$_FILES ok');
     $extension = strtolower(pathinfo($_FILES['saveName']['name'],PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
