@@ -12,36 +12,47 @@ $car = new Car($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
-$car->idCustomer = $decodedData->idCustomer;
-$car->licensePlateCar = $decodedData->licensePlateCar;
-$car->brandCar = $decodedData->brandCar;
-$car->modelCar = $decodedData->modelCar;
-$car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
-$car->motorizationCar = $decodedData->motorizationCar;
-$car->versionCar = $decodedData->versionCar;
-$car->colorCar = $decodedData->colorCar;
+// $car->idCustomer = $decodedData->idCustomer;
+// $car->licensePlateCar = $decodedData->licensePlateCar;
+// $car->brandCar = $decodedData->brandCar;
+// $car->modelCar = $decodedData->modelCar;
+// $car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
+// $car->motorizationCar = $decodedData->motorizationCar;
+// $car->versionCar = $decodedData->versionCar;
+// $car->colorCar = $decodedData->colorCar;
 
-$uploadDirectory = 'grayCards/';
+// $uploadDirectory = 'grayCards/';
+$uploadDirectory = 'greyCards/';
 $extensions = [
     'jpg',
     'jpeg',
     'png',
     'gif'
-];
+];  
 
-echo json_encode($_FILES);
+$card = $decodedData->greyCard;
+echo json_encode($card);
 
-if ((isset($_FILES)) && (!empty($_FILES['image']))) {
+$file = $_FILES['greyCard']['name'];
+$tempName = $_FILES['greyCard']['tmp_name'];
+$error = $_FILES['greyCard']['error'];
+
+echo json_encode($file);
+echo json_encode($tempName);
+echo json_encode($error);
+
+if (!empty($file)) {
     echo json_encode('isset$_FILES ok');
-    $extension = strtolower(pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION));
+    $extension = strtolower(pathinfo($file,PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
         echo json_encode('extension ok');
-		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
+//		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
+        $saveName = 'nom_de_sauvegarde'.'-'.uniqid().$extension;
         echo json_encode('$saveName = '.$saveName);
-		move_uploaded_file($_FILES['image']['tmp_name'], $uploadDirectory . $saveName);
-		$car->urlGrayCard = $saveName;
+		move_uploaded_file($tempName, $uploadDirectory);
+//		$car->urlGrayCard = $saveName;
     } else {
-        echo json_encode('Le format de l\'image '. $_FILES['image']['name'] .' n\'est pas bon');
+        echo json_encode('Le format de l\'image '. $file .' n\'est pas bon');
     }
 }
 
@@ -53,8 +64,8 @@ if(!empty($decodedData->idCar)) {
     $car->addGrayCardToCar($car);
 }
 
-if ($result) {
-    echo json_encode([ "message" => "Le véhicule a été édité !" ]);
-}  else { 
-    echo json_encode([ "message" => "Le véhicule n'a pas pu être édité..." ]);
-}
+// if ($result) {
+//     echo json_encode([ "message" => "Le véhicule a été édité !" ]);
+// }  else { 
+//     echo json_encode([ "message" => "Le véhicule n'a pas pu être édité..." ]);
+// }
