@@ -51,6 +51,8 @@ if (empty($decodedData->idCustomer)) {
     $thisCustomer = $customer->searchCustomerById($customer);
 }
 
+echo json_encode($thisCustomer);
+
 if (empty($decodedData->idCar)) {
     $car->idCustomer = $thisCustomer->idCustomer;
     $car->licensePlateCar = $decodedData->licensePlateCar;
