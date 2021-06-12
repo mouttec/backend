@@ -59,7 +59,7 @@ for ($i = 0; $i < 60; $i++) {
         "dateBookingCalendar" => date('Y-m-d', strtotime('+'.$i.' days')),
     ];
     foreach ($$shiftsAvailable as $key => $shift) {
-        $day['h'.$key+1.'bookingCalendar'] = $shift.'-'.date('Y-m-d', strtotime('+'.$i.' days'))
+        $day['h'.($key+1).'bookingCalendar'] = $shift.'-'.date('Y-m-d', strtotime('+'.$i.' days'))
     }
     array_push($calendar, $day);
 }
