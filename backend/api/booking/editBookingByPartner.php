@@ -77,7 +77,7 @@ if (!empty($decodedData->addressBack)) {
     $address->address = $decodedData->addressBack;
     $address->createAddress($address);
     $addressBackId = $address->searchAddressId($address);
-    $customer->idBillingAddress = $addressBackId;
+    $customer->idBillingAddress = $addressBackId['idBillingAddress'];
 }
 
 if (!empty($decodedData->addressForth)) {
@@ -86,7 +86,7 @@ if (!empty($decodedData->addressForth)) {
     $address->address = $decodedData->addressForth;
     $address->createAddress($address);
     $addressForthId = $address->searchAddressId($address);
-    $customer->idBillingAddress = $addressForthId;
+    $customer->idBillingAddress = $addressForthId['idBillingAddress'];
 }
 
 //On bind l'adresse de facturation

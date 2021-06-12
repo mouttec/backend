@@ -7,6 +7,7 @@ class Address
     public $idAddress;
     public $idCustomer;
     public $address;
+
     public function __construct($db) 
     {
         $this->conn = $db;
@@ -76,8 +77,8 @@ class Address
         FROM "
         . $this->table .
         " WHERE
-        idCustomer = :idCustomer,
-        address = :address
+        (idCustomer = :idCustomer AND
+        address = :address)
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -86,9 +87,9 @@ class Address
             "address" => htmlspecialchars(strip_tags($this->address))
         ];
 
-        if($stmt->execute($params)) {
+        if ($stmt->execute($params)) {
             $row = $stmt->fetch();
-            return $row['idAddress'];
+            return $row;
         }
         return false;
     }    
