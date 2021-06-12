@@ -140,7 +140,8 @@ class Customer {
         ];
 
         if ($stmt->execute($params)) {
-            return $stmt;
+            $row = $stmt->fetch();
+            return $row;
         }
         return false;
     }
