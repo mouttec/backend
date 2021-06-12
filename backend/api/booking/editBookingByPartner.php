@@ -51,10 +51,8 @@ if (empty($decodedData->idCustomer)) {
     $thisCustomer = $customer->searchCustomerById($customer);
 }
 
-echo json_encode($thisCustomer);
-
 if (empty($decodedData->idCar)) {
-    $car->idCustomer = $thisCustomer->idCustomer;
+    $car->idCustomer = $thisCustomer['idCustomer'];
     $car->licensePlateCar = $decodedData->licensePlateCar;
     $car->brandCar = $decodedData->brandCar;
     $car->modelCar = $decodedData->modelCar;
@@ -70,12 +68,12 @@ if (empty($decodedData->idCar)) {
     $thisCar = $car->searchCarById($car);
 }
 
-$car->idCar = $thisCar->idCar;
+$car->idCar = $thisCar['idCar'];
 $car->bindCustomerToCar($car);
 
 if (!empty($decodedData->addressBack)) {
     //adresse retour = partenaire > domicile client
-    $address->idCustomer = $thisCustomer->idCustomer;
+    $address->idCustomer = $thisCustomer['idCustomer'];
     $address->address = $decodedData->addressBack;
     $address->createAddress($address);
     $addressBackId = $address->searchAddressId($address);
@@ -84,7 +82,7 @@ if (!empty($decodedData->addressBack)) {
 
 if (!empty($decodedData->addressForth)) {
     //adresse aller = domicile client > partenaire
-    $address->idCustomer = $thisCustomer->idCustomer;
+    $address->idCustomer = $thisCustomer['idCustomer'];
     $address->address = $decodedData->addressForth;
     $address->createAddress($address);
     $addressForthId = $address->searchAddressId($address);
@@ -94,7 +92,7 @@ if (!empty($decodedData->addressForth)) {
 //On bind l'adresse de facturation
 $customer->bindIdBillingAddress($customer);
 
-$booking->idCustomer = $thisCustomer->idCustomer;
+$booking->idCustomer = $thisCustomer['idCustomer'];
 $booking->idPartner = $decodedData->idPartner;
 $booking->hoursBooking = $decodedData->hoursBooking;
 $booking->dateBooking = $decodedData->dateBooking;
@@ -102,7 +100,7 @@ $booking->formulaBooking = $decodedData->formulaBooking;
 $booking->statusBooking = $decodedData->statusBooking;
 $booking->dateReturn = $decodedData->dateReturn;
 $booking->hoursReturn = $decodedData->hoursReturn;
-$booking->idCar = $thisCar->idCar;
+$booking->idCar = $thisCar['idCar'];
 $booking->idPickupAddress = $addressForthId;
 $booking->idReturnAddress = $addressBackId;
 $booking->idAgency = $decodedData->idAgency;
