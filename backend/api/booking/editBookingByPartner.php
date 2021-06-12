@@ -70,29 +70,26 @@ if (empty($decodedData->idCar)) {
 $car->idCar = $thisCar->idCar;
 $car->bindCustomerToCar($car);
 
-if (!empty($decodedData->addressStreetNumber)) {
+if (!empty($decodedData->addressBack)) {
+    //adresse retour = partenaire > domicile client
+    $address->idCustomer = $thisCustomer->idCustomer;
+    $address->address = $decodedData->addressBack;
+    $address->createAddress($address);
+    $addressBackId = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressBackId;
+}
+
+if (!empty($decodedData->addressForth)) {
     //adresse aller = domicile client > partenaire
     $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
+    $address->address = $decodedData->addressForth;
     $address->createAddress($address);
     $addressForthId = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressForthId;
 }
 
-if (!empty($decodedData->addressBackStreetNumber)) {
-    //adresse retour = partenaire > domicile client
-    $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
-    $address->createAddress($address);
-    $addressBackId = $address->searchAddressId($address);
-}
-
-if (!empty($decodedData->addressBilling)) {
-    //adresse retour = partenaire > domicile client
-    $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
-    $address->createAddress($address);
-    $addressBackId = $address->searchAddressId($address);
-}
+//On bind l'adresse de facturation
+$customer->bindIdBillingAddress($customer);
 
 $booking->idCustomer = $thisCustomer->idCustomer;
 $booking->idPartner = $decodedData->idPartner;
@@ -110,6 +107,7 @@ $booking->distanceForth = $decodedData->distanceForth;
 $booking->durationForth = $decodedData->durationForth;
 $booking->distanceBack = $decodedData->distanceBack;
 $booking->durationBack = $decodedData->durationBack;
+$booking->priceBooking = $decodedData->priceBooking;
 
 $result = $booking->createBooking($booking);
 

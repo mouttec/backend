@@ -76,7 +76,7 @@ class Address
         SELECT *
         FROM "
         . $this->table .
-        " SET
+        " WHERE
         idCustomer = :idCustomer,
         address = :address
         ";

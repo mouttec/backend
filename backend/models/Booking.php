@@ -23,6 +23,7 @@ class Booking {
     public $durationBack;
     public $originBooking;
     public $dateBooking;
+    public $priceBooking;
 
     public function __construct($db) 
     {
@@ -50,7 +51,8 @@ class Booking {
             distanceForth = :distanceForth,
             durationForth = :durationForth,
             distanceBack = :distanceBack,
-            durationBack = :durationBack
+            durationBack = :durationBack,
+            priceBooking = :priceBooking
             ";
         $stmt = $this->conn->prepare($query);
 
@@ -70,7 +72,8 @@ class Booking {
             "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
             "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
             "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
-            "durationBack" => htmlspecialchars(strip_tags($this->durationBack))
+            "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
+            "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
         ];
 
         if($stmt->execute($params)) {
@@ -203,25 +206,34 @@ class Booking {
             UPDATE "
             . $this->table .
             " SET
+            idCustomer = :idCustomer,
             idPartner = :idPartner,
             hoursBooking = :hoursBooking,
             dateBooking = :dateBooking,
+            statusBooking = :statusBooking,
             formulaBooking = :formulaBooking,
             dateReturn = :dateReturn,
-            hoursReturn = :dateReturn,
+            hoursReturn = :hoursReturn,        
             idCar = :idCar,
             idPickupAddress = :idPickupAddress,
             idReturnAddress = :idReturnAddress,
-            idAgency = :idAgency
+            idAgency = :idAgency,
+            distanceForth = :distanceForth,
+            durationForth = :durationForth,
+            distanceBack = :distanceBack,
+            durationBack = :durationBack,
+            priceBooking = :priceBooking
             WHERE
             idBooking = :idBooking       
         ";
         $stmt = $this->conn->prepare($query);
 
         $params = [
+            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
             "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
             "hoursBooking" => htmlspecialchars(strip_tags($this->hoursBooking)),
             "dateBooking" => htmlspecialchars(strip_tags($this->dateBooking)),
+            "statusBooking" => htmlspecialchars(strip_tags($this->statusBooking)),
             "formulaBooking" => htmlspecialchars(strip_tags($this->formulaBooking)),
             "dateReturn" => htmlspecialchars(strip_tags($this->dateReturn)),
             "hoursReturn" => htmlspecialchars(strip_tags($this->hoursReturn)),
@@ -229,6 +241,11 @@ class Booking {
             "idPickupAddress" => htmlspecialchars(strip_tags($this->idPickupAddress)),
             "idReturnAddress" => htmlspecialchars(strip_tags($this->idReturnAddress)),
             "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+            "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
+            "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
+            "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
+            "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
+            "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking)),
             "idBooking" => htmlspecialchars(strip_tags($this->idBooking))
         ];
 
