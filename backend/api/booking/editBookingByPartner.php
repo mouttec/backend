@@ -39,7 +39,7 @@ if (empty($decodedData->idCustomer)) {
         $randomStr .= $chars[rand(0, $maxLength - 1)];
     }
     $customer->mixedPassword = $randomStr;
-    $customer->idBillingAddress = 'N/A';
+    $customer->idBillingAddress = '0';
     $customer->createCustomer($customer);
     //idCustomer créée
     $thisCustomer = new Customer($conn);
