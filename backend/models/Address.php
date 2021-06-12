@@ -19,8 +19,7 @@ class Address
             . $this->table .
             " SET
             idCustomer = :idCustomer,
-            address = :address,
-
+            address = :address
         ";
         $stmt = $this->conn->prepare($query);
 
@@ -76,7 +75,7 @@ class Address
         SELECT *
         FROM "
         . $this->table .
-        " SET
+        " WHERE
         idCustomer = :idCustomer,
         address = :address
         ";

@@ -39,6 +39,7 @@ if (empty($decodedData->idCustomer)) {
         $randomStr .= $chars[rand(0, $maxLength - 1)];
     }
     $customer->mixedPassword = $randomStr;
+    $customer->idBillingAddress = '0';
     $customer->createCustomer($customer);
     //idCustomer créée
     $thisCustomer = new Customer($conn);
@@ -51,7 +52,7 @@ if (empty($decodedData->idCustomer)) {
 }
 
 if (empty($decodedData->idCar)) {
-    $car->idCustomer = $thisCustomer->idCustomer;
+    $car->idCustomer = $thisCustomer['idCustomer'];
     $car->licensePlateCar = $decodedData->licensePlateCar;
     $car->brandCar = $decodedData->brandCar;
     $car->modelCar = $decodedData->modelCar;
@@ -67,34 +68,31 @@ if (empty($decodedData->idCar)) {
     $thisCar = $car->searchCarById($car);
 }
 
-$car->idCar = $thisCar->idCar;
+$car->idCar = $thisCar['idCar'];
 $car->bindCustomerToCar($car);
 
-if (!empty($decodedData->addressStreetNumber)) {
+if (!empty($decodedData->addressBack)) {
+    //adresse retour = partenaire > domicile client
+    $address->idCustomer = $thisCustomer['idCustomer'];
+    $address->address = $decodedData->addressBack;
+    $address->createAddress($address);
+    $addressBackId = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressBackId;
+}
+
+if (!empty($decodedData->addressForth)) {
     //adresse aller = domicile client > partenaire
-    $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
+    $address->idCustomer = $thisCustomer['idCustomer'];
+    $address->address = $decodedData->addressForth;
     $address->createAddress($address);
     $addressForthId = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressForthId;
 }
 
-if (!empty($decodedData->addressBackStreetNumber)) {
-    //adresse retour = partenaire > domicile client
-    $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
-    $address->createAddress($address);
-    $addressBackId = $address->searchAddressId($address);
-}
+//On bind l'adresse de facturation
+$customer->bindIdBillingAddress($customer);
 
-if (!empty($decodedData->addressBilling)) {
-    //adresse retour = partenaire > domicile client
-    $address->idCustomer = $thisCustomer->idCustomer;
-    $address->address = $decodedData->address;
-    $address->createAddress($address);
-    $addressBackId = $address->searchAddressId($address);
-}
-
-$booking->idCustomer = $thisCustomer->idCustomer;
+$booking->idCustomer = $thisCustomer['idCustomer'];
 $booking->idPartner = $decodedData->idPartner;
 $booking->hoursBooking = $decodedData->hoursBooking;
 $booking->dateBooking = $decodedData->dateBooking;
@@ -102,7 +100,7 @@ $booking->formulaBooking = $decodedData->formulaBooking;
 $booking->statusBooking = $decodedData->statusBooking;
 $booking->dateReturn = $decodedData->dateReturn;
 $booking->hoursReturn = $decodedData->hoursReturn;
-$booking->idCar = $thisCar->idCar;
+$booking->idCar = $thisCar['idCar'];
 $booking->idPickupAddress = $addressForthId;
 $booking->idReturnAddress = $addressBackId;
 $booking->idAgency = $decodedData->idAgency;
@@ -110,6 +108,7 @@ $booking->distanceForth = $decodedData->distanceForth;
 $booking->durationForth = $decodedData->durationForth;
 $booking->distanceBack = $decodedData->distanceBack;
 $booking->durationBack = $decodedData->durationBack;
+$booking->priceBooking = $decodedData->priceBooking;
 
 $result = $booking->createBooking($booking);
 

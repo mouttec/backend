@@ -140,7 +140,8 @@ class Customer {
         ];
 
         if ($stmt->execute($params)) {
-            return $stmt;
+            $row = $stmt->fetch();
+            return $row;
         }
         return false;
     }
@@ -177,6 +178,30 @@ class Customer {
         }
         return false;
     }
+
+    public function bindIdBillingAddress() 
+    {
+        $query = "
+            UPDATE "
+            . $this->table .
+            " SET
+            idBillingAddress = :idBillingAddress,
+            WHERE
+            idCustomer = :idCustomer       
+        ";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "idBillingAddress" => htmlspecialchars(strip_tags($this->idBillingAddress)),
+            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer))
+        ];
+
+        if($stmt->execute($params)) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function updateStatusCustomer() 
     {
@@ -224,7 +249,7 @@ class Customer {
         return false;
     }
 
-    public function updatePasswordCustomer() 
+    public function passwordUpdate() 
     {
         $query = "
             UPDATE "
