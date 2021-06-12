@@ -52,8 +52,8 @@ if (empty($decodedData->idCustomer)) {
     $customer->idCustomer = $thisCustomer['idCustomer'];
 }
 
+$car->idCustomer = $customer->idCustomer;
 if (empty($decodedData->idCar)) {
-    $car->idCustomer = $customer->idCustomer;
     $car->licensePlateCar = $decodedData->licensePlateCar;
     $car->brandCar = $decodedData->brandCar;
     $car->modelCar = $decodedData->modelCar;
