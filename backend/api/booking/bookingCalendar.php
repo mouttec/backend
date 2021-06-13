@@ -76,7 +76,7 @@ for ($i = 0; $i < 60; $i++) {
     foreach ($shiftsAvailable as $key => $shift) {
         $day['h'.($key+1).'bookingCalendar'] = $shift.'-'.date('Y-m-d', strtotime('+'.$i.' days'));
     }
-    if(!in_array(date('l', strtotime('+'.$i.' days')), $closureDays) {
+    if(!in_array(date('l', strtotime('+'.$i.' days')), $closureDays)) {
         array_push($calendar, $day);
     }
 }
