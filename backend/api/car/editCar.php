@@ -12,14 +12,14 @@ $car = new Car($conn);
 
 $decodedData = json_decode(file_get_contents("php://input"));
 
-// $car->idCustomer = $decodedData->idCustomer;
-// $car->licensePlateCar = $decodedData->licensePlateCar;
-// $car->brandCar = $decodedData->brandCar;
-// $car->modelCar = $decodedData->modelCar;
-// $car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
-// $car->motorizationCar = $decodedData->motorizationCar;
-// $car->versionCar = $decodedData->versionCar;
-// $car->colorCar = $decodedData->colorCar;
+$car->idCustomer = $decodedData->idCustomer;
+$car->licensePlateCar = $decodedData->licensePlateCar;
+$car->brandCar = $decodedData->brandCar;
+$car->modelCar = $decodedData->modelCar;
+$car->dateOfCirculationCar = $decodedData->dateOfCirculationCar;
+$car->motorizationCar = $decodedData->motorizationCar;
+$car->versionCar = $decodedData->versionCar;
+$car->colorCar = $decodedData->colorCar;
 
 $uploadDirectory = '../';
 $extensions = [
