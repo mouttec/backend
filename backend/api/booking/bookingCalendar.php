@@ -80,6 +80,7 @@ for ($i = 0; $i < 10; $i++) {
 
 $booking->idAgency = $decodedData->idAgency;
 $bookings = $booking->searchBookingsForCalendar($booking);
+echo json_encode($bookings);
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     while ($row = $bookings->fetch()) {
@@ -113,7 +114,7 @@ if ($counter > 0) {
 }
 
 if (isset($calendar) && !empty($calendar)) {
-    echo json_encode($calendar);
+    // echo json_encode($calendar);
 } else { 
     http_response_code(404); 
 }
