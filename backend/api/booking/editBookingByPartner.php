@@ -83,6 +83,12 @@ if (!empty($decodedData->addressBack)) {
     $booking->hoursBack = $decodedData->hoursBack;
     $booking->distanceBack = $decodedData->distanceBack;
     $booking->durationBack = $decodedData->durationBack;
+} else {
+    $booking->idAddressBack = NULL;
+    $booking->dateBack = NULL;
+    $booking->hoursBack = NULL;
+    $booking->distanceBack = NULL;
+    $booking->durationBack = NULL;
 }
 
 if (!empty($decodedData->addressForth)) {
@@ -97,6 +103,12 @@ if (!empty($decodedData->addressForth)) {
     $booking->hoursForth = $decodedData->hoursForth;
     $booking->distanceForth = $decodedData->distanceForth;
     $booking->durationForth = $decodedData->durationForth;
+} else {
+    $booking->idAddressForth = NULL;
+    $booking->dateForth = NULL;
+    $booking->hoursForth = NULL;
+    $booking->distanceForth = NULL;
+    $booking->durationForth = NULL;
 }
 
 //On bind l'adresse de facturation
