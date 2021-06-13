@@ -78,8 +78,6 @@ for ($i = 0; $i < 60; $i++) {
     array_push($calendar, $day);
 }
 
-// "h4bookingCalendar": "10:30-2021-06-10",
-
 $booking->idAgency = $decodedData->idAgency;
 $bookings = $booking->searchBookingsForCalendar($booking);
 $counter = $bookings->rowCount();
@@ -97,6 +95,7 @@ if ($counter > 0) {
             $dayKey = array_search($dateForth, array_column($calendar, 'dateBookingCalendar'));
             $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
             $calendar[$dayKey][$hourKey] = 'Réservé';
+            echo json_encode($calendar[$dayKey][$hourKey]);
         if (!is_null($dateBack)) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
             // $durationDelayInQuarters = round(($durationBack+20)/15);
