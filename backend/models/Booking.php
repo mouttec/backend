@@ -194,9 +194,9 @@ class Booking {
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];*/
         $query = "
-        SELECT *
-        FROM bookings
-        WHERE (dateBooking >= :startDate AND dateBooking <= :endDate)";
+            SELECT *
+            FROM bookings
+            WHERE (dateBooking >= :startDate AND dateBooking <= :endDate)";
         $stmt = $this->conn->prepare($query);
 
         $params = [
@@ -204,8 +204,8 @@ class Booking {
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];
 
-        $result = $stmt->execute($params);
-        if ($result) {
+        if($stmt->execute($params)) {
+            $result = $stmt->fetchAll();
             return $result;
         }
         return false;
