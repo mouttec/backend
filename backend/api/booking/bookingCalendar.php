@@ -67,6 +67,31 @@ for ($h = 7; $h <= 18; $h++) {
 
 $calendar = array();
 $closureDays = ['Saturday', 'Sunday'];
+$year = intval(strftime('%Y'));
+$easterDate = easter_date($year);
+$easterDay = date('j', $easterDate);
+$easterMonth = date('n', $easterDate);
+$easterYear = date('Y', $easterDate);
+$holidays = array(
+        // Jours fériés fixes
+        mktime(0, 0, 0, 1, 1, $year),// 1er janvier
+        mktime(0, 0, 0, 5, 1, $year),// Fête du travail
+        mktime(0, 0, 0, 5, 8, $year),// Victoire des alliés
+        mktime(0, 0, 0, 7, 14, $year),// Fête nationale
+        mktime(0, 0, 0, 8, 15, $year),// Assomption
+        mktime(0, 0, 0, 11, 1, $year),// Toussaint
+        mktime(0, 0, 0, 11, 11, $year),// Armistice
+        mktime(0, 0, 0, 12, 25, $year),// Noël
+        // Jour feries qui dépendent de Pâques
+        mktime(0, 0, 0, $easterMonth, $easterDay + 2, $easterYear),// Lundi de Pâques
+        mktime(0, 0, 0, $easterMonth, $easterDay + 40, $easterYear),// Ascension
+        mktime(0, 0, 0, $easterMonth, $easterDay + 51, $easterYear),// Pentecôte
+);
+// Formatage au format Y-m-d des dates
+foreach ($holidays as $key => $value) {
+    $holidays[$key] = date('Y-m-d', $value);    
+}
+
 for ($i = 0; $i < 60; $i++) {
     $day = array();
     $day = [
@@ -76,7 +101,7 @@ for ($i = 0; $i < 60; $i++) {
     foreach ($shiftsAvailable as $key => $shift) {
         $day['h'.($key+1).'bookingCalendar'] = $shift.'-'.date('Y-m-d', strtotime('+'.$i.' days'));
     }
-    if(!in_array(date('l', strtotime('+'.$i.' days')), $closureDays)) {
+    if(!in_array(date('l', strtotime('+'.$i.' days')), $closureDays) && !in_array(date('Y-m-d', strtotime('+'.$i.' days')), $holidays))  {
         array_push($calendar, $day);
     }
 }
