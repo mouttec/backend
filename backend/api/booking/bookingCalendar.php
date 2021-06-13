@@ -112,7 +112,7 @@ $counter = $bookings->rowCount();
 if ($counter > 0) {
     while ($row = $bookings->fetch()) {
         extract($row);
-        if ($statusBooking == 'valide') {
+        if ($statusBooking == 'confirme') {
             if (!is_null($dateForth)) {
                 //On donne à $dateForth le format YYYY-MM-DD
                 // $dateForth =  implode('-', array_reverse(explode('/', $dateForth)));

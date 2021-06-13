@@ -24,7 +24,7 @@ if ($counter > 0) {
     $calendar = array();
     while ($row = $bookings->fetch()) {
         extract($row);
-        if ($statusBooking == 'valide') {
+        if ($statusBooking == 'confirme') {
             $customer->idCustomer = $idCustomer;
             $thisCustomer = $customer->searchCustomerById($customer);
             if (!is_null($dateForth)) {
