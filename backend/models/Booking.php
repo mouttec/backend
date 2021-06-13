@@ -180,7 +180,7 @@ class Booking {
         return false;
     }
 
-        public function searchBookingsForCalendar() 
+    public function searchBookingsForCalendar() 
     {
         /*$query = "
         SELECT *
@@ -196,7 +196,7 @@ class Booking {
         $query = "
             SELECT *
             FROM bookings
-            WHERE (dateBooking >= :startDate AND dateBooking <= :endDate)";
+           /* WHERE (dateBooking >= :startDate AND dateBooking <= :endDate)*/";
         $stmt = $this->conn->prepare($query);
 
         $params = [
@@ -204,9 +204,8 @@ class Booking {
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];
 
-        if($stmt->execute($params)) {
-            $result = $stmt->fetchAll();
-            return $result;
+        if($stmt->execute(/*$params*/)) {
+            return $stmt;
         }
         return false;
     }

@@ -78,8 +78,8 @@ for ($i = 0; $i < 10; $i++) {
     array_push($calendar, $day);
 }
 
-$booking->idAgency = $decodedData->idAgency;
-$bookings = $booking->searchBookingsForCalendar($booking);
+// $booking->idAgency = $decodedData->idAgency;
+$bookings = $booking->searchBookingsForCalendar();
 echo json_encode($bookings);
 $counter = $bookings->rowCount();
 if ($counter > 0) {
