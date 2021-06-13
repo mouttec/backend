@@ -182,7 +182,7 @@ class Booking {
 
         public function searchBookingsForCalendar() 
     {
-        $query = "
+        /*$query = "
         SELECT *
         FROM bookings
         WHERE (idAgency = :idAgency AND dateBooking >= :startDate AND dateBooking <= :endDate)";
@@ -190,8 +190,18 @@ class Booking {
 
         $params = [
             "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
-            "startDate" => date('d/m/Y'),
-            "endDate" => date('d/m/Y', strtotime('+60 days'))
+            "startDate" => date('Y-m-d'),
+            "endDate" => date('Y-m-d', strtotime('+60 days'))
+        ];*/
+        $query = "
+        SELECT *
+        FROM bookings
+        WHERE (dateBooking >= :startDate AND dateBooking <= :endDate)";
+        $stmt = $this->conn->prepare($query);
+
+        $params = [
+            "startDate" => date('Y-m-d'),
+            "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];
 
         if($stmt->execute($params)) {
