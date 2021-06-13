@@ -31,54 +31,140 @@ class Booking {
 
     public function createBooking() 
     {
-        $query = "
+        if (!is_null($this->idAddressForth) && (!is_null($this->idAddressBack)) {
+            $query = "
             INSERT INTO "
-            . $this->table .
-            " SET
-            idCustomer = :idCustomer,
-            idPartner = :idPartner,
-            hoursForth = :hoursForth,
-            dateForth = :dateForth,
-            statusBooking = :statusBooking,
-            formulaBooking = :formulaBooking,
-            dateBack = :dateBack,
-            hoursBack = :hoursBack,        
-            idCar = :idCar,
-            idAddressForth = :idAddressForth,
-            idAddressBack = :idAddressBack,
-            idAgency = :idAgency,
-            distanceForth = :distanceForth,
-            durationForth = :durationForth,
-            distanceBack = :distanceBack,
-            durationBack = :durationBack,
-            priceBooking = :priceBooking
-            ";
-        $stmt = $this->conn->prepare($query);
+                . $this->table .
+                " SET
+                idCustomer = :idCustomer,
+                idPartner = :idPartner,
+                hoursForth = :hoursForth,
+                dateForth = :dateForth,
+                statusBooking = :statusBooking,
+                formulaBooking = :formulaBooking,
+                dateBack = :dateBack,
+                hoursBack = :hoursBack,        
+                idCar = :idCar,
+                idAddressForth = :idAddressForth,
+                idAddressBack = :idAddressBack,
+                idAgency = :idAgency,
+                distanceForth = :distanceForth,
+                durationForth = :durationForth,
+                distanceBack = :distanceBack,
+                durationBack = :durationBack,
+                priceBooking = :priceBooking
+                ";
+            $stmt = $this->conn->prepare($query);
 
-        $params = [
-            "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
-            "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
-            "hoursForth" => htmlspecialchars(strip_tags($this->hoursForth)),
-            "dateForth" => htmlspecialchars(strip_tags($this->dateForth)),
-            "statusBooking" => htmlspecialchars(strip_tags($this->statusBooking)),
-            "formulaBooking" => htmlspecialchars(strip_tags($this->formulaBooking)),
-            "dateBack" => htmlspecialchars(strip_tags($this->dateBack)),
-            "hoursBack" => htmlspecialchars(strip_tags($this->hoursBack)),
-            "idCar" => htmlspecialchars(strip_tags($this->idCar)),
-            "idAddressForth" => htmlspecialchars(strip_tags($this->idAddressForth)),
-            "idAddressBack" => htmlspecialchars(strip_tags($this->idAddressBack)),
-            "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
-            "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
-            "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
-            "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
-            "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
-            "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
-        ];
+            $params = [
+                "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
+                "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
+                "hoursForth" => htmlspecialchars(strip_tags($this->hoursForth)),
+                "dateForth" => htmlspecialchars(strip_tags($this->dateForth)),
+                "statusBooking" => htmlspecialchars(strip_tags($this->statusBooking)),
+                "formulaBooking" => htmlspecialchars(strip_tags($this->formulaBooking)),
+                "dateBack" => htmlspecialchars(strip_tags($this->dateBack)),
+                "hoursBack" => htmlspecialchars(strip_tags($this->hoursBack)),
+                "idCar" => htmlspecialchars(strip_tags($this->idCar)),
+                "idAddressForth" => htmlspecialchars(strip_tags($this->idAddressForth)),
+                "idAddressBack" => htmlspecialchars(strip_tags($this->idAddressBack)),
+                "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+                "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
+                "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
+                "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
+                "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+            ];
 
-        if($stmt->execute($params)) {
-            return true;
+            if($stmt->execute($params)) {
+                return true;
+            }
+            return false;
         }
-        return false;
+        elseif (!is_null($this->idAddressForth)) {
+            $query = "
+                INSERT INTO "
+                . $this->table .
+                " SET
+                idCustomer = :idCustomer,
+                idPartner = :idPartner,
+                hoursForth = :hoursForth,
+                dateForth = :dateForth,
+                statusBooking = :statusBooking,
+                formulaBooking = :formulaBooking,
+                idCar = :idCar,
+                idAddressForth = :idAddressForth,
+                idAgency = :idAgency,
+                distanceForth = :distanceForth,
+                durationForth = :durationForth,
+                priceBooking = :priceBooking
+                ";
+            $stmt = $this->conn->prepare($query);
+
+            $params = [
+                "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
+                "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
+                "hoursForth" => htmlspecialchars(strip_tags($this->hoursForth)),
+                "dateForth" => htmlspecialchars(strip_tags($this->dateForth)),
+                "statusBooking" => htmlspecialchars(strip_tags($this->statusBooking)),
+                "formulaBooking" => htmlspecialchars(strip_tags($this->formulaBooking)),
+                "idCar" => htmlspecialchars(strip_tags($this->idCar)),
+                "idAddressForth" => htmlspecialchars(strip_tags($this->idAddressForth)),
+                "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+                "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
+                "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+            ];
+
+            if($stmt->execute($params)) {
+                return true;
+            }
+            return false;
+        }
+        elseif (!is_null($this->idAddressBack)) {
+            $query = "
+                INSERT INTO "
+                . $this->table .
+                " SET
+                idCustomer = :idCustomer,
+                idPartner = :idPartner,
+                statusBooking = :statusBooking,
+                formulaBooking = :formulaBooking,
+                dateBack = :dateBack,
+                hoursBack = :hoursBack,        
+                idCar = :idCar,
+                idAddressBack = :idAddressBack,
+                idAgency = :idAgency,
+                distanceBack = :distanceBack,
+                durationBack = :durationBack,
+                priceBooking = :priceBooking
+                ";
+            $stmt = $this->conn->prepare($query);
+
+            $params = [
+                "idCustomer" => htmlspecialchars(strip_tags($this->idCustomer)),
+                "idPartner" => htmlspecialchars(strip_tags($this->idPartner)),
+                "statusBooking" => htmlspecialchars(strip_tags($this->statusBooking)),
+                "formulaBooking" => htmlspecialchars(strip_tags($this->formulaBooking)),
+                "dateBack" => htmlspecialchars(strip_tags($this->dateBack)),
+                "hoursBack" => htmlspecialchars(strip_tags($this->hoursBack)),
+                "idCar" => htmlspecialchars(strip_tags($this->idCar)),
+                "idAddressBack" => htmlspecialchars(strip_tags($this->idAddressBack)),
+                "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
+                "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
+                "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+            ];
+
+            if($stmt->execute($params)) {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+
+
     }
 
     public function listBookings() 
