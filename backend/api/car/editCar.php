@@ -39,7 +39,7 @@ if (!empty($file)) {
 //		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().'.'.$extension;
         $saveName = 'nom_de_sauvegarde'.'-'.uniqid().'.'.$extension;
 		move_uploaded_file($tempName, $uploadDirectory.$file);
-//		$car->urlGrayCard = $saveName;
+		$car->urlGrayCard = $saveName;
     } else {
         echo json_encode('Le format de l\'image '. $file .' n\'est pas bon');
     }
