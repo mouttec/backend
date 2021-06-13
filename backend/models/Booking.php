@@ -14,15 +14,14 @@ class Booking {
     public $dateBack;
     public $hoursBack;
     public $idCar;
-    public $idForthAddress;
-    public $idBackAddress;
+    public $idAddressForth;
+    public $idAddressBack;
     public $idAgency;
     public $distanceForth;
     public $durationForth;
     public $distanceBack;
     public $durationBack;
     public $originBooking;
-    public $dateForth;
     public $priceBooking;
 
     public function __construct($db) 
