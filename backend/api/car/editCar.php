@@ -21,7 +21,7 @@ $decodedData = json_decode(file_get_contents("php://input"));
 // $car->versionCar = $decodedData->versionCar;
 // $car->colorCar = $decodedData->colorCar;
 
-// $uploadDirectory = 'grayCards/';
+// $uploadDirectory = 'greyCards/';
 $uploadDirectory = 'greyCards/';
 $extensions = [
     'jpg',
@@ -30,12 +30,12 @@ $extensions = [
     'gif'
 ];  
 
-$card = $decodedData->greyCard;
+// $card = $decodedData->greyCard;
 echo json_encode($card);
 
-$file = $_FILES['greyCard']['name'];
-$tempName = $_FILES['greyCard']['tmp_name'];
-$error = $_FILES['greyCard']['error'];
+$file = $_FILES['file']['name'];
+$tempName = $_FILES['file']['tmp_name'];
+$error = $_FILES['file']['error'];
 
 echo json_encode($file);
 echo json_encode($tempName);
