@@ -45,16 +45,16 @@ if (!empty($file)) {
     }
 }
 
-// if(!empty($decodedData->idCar)) {
-//     $car->idCar = $decodedData->idCar;
-//     $result = $car->updateCar($car);
-// } else {
-//     $result = $car->createCar($car);
-//     $car->addGrayCardToCar($car);
-// }
+if(!empty($decodedData->idCar)) {
+    $car->idCar = $decodedData->idCar;
+    $result = $car->updateCar($car);
+} else {
+    $result = $car->createCar($car);
+    $car->addGrayCardToCar($car);
+}
 
-// if ($result) {
-//     echo json_encode([ "message" => "Le véhicule a été édité !" ]);
-// }  else { 
-//     echo json_encode([ "message" => "Le véhicule n'a pas pu être édité..." ]);
-// }
+if ($result) {
+    echo json_encode([ "message" => "Le véhicule a été édité !" ]);
+}  else { 
+    echo json_encode([ "message" => "Le véhicule n'a pas pu être édité..." ]);
+}
