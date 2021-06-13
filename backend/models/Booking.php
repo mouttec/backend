@@ -31,7 +31,7 @@ class Booking {
 
     public function createBooking() 
     {
-        if (!is_null($this->idAddressForth) && (!is_null($this->idAddressBack)) {
+        if (!is_null($this->idAddressForth) && !is_null($this->idAddressBack)) {
             $query = "
             INSERT INTO "
                 . $this->table .
