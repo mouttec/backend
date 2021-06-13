@@ -204,8 +204,9 @@ class Booking {
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];
 
-        if($stmt->execute($params)) {
-            return $stmt;
+        $result = $stmt->execute($params);
+        if ($result) {
+            return $result;
         }
         return false;
     }
