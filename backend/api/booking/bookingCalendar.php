@@ -96,6 +96,7 @@ if ($counter > 0) {
             $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
             $calendar[$dayKey][$hourKey] = 'Réservé';
             echo json_encode($calendar[$dayKey][$hourKey]);
+        }
         if (!is_null($dateBack)) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
             // $durationDelayInQuarters = round(($durationBack+20)/15);
