@@ -99,11 +99,12 @@ if ($counter > 0) {
             $calendar[$dayKey][$hourKey] = 'Réservé';
         }
         if (!is_null($dateBack)) {
-            $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
+            // $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
             // $durationDelayInQuarters = round(($durationBack+20)/15);
             // for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
             //     $calendar[$dateBack][date('H:i', strtotime($hoursBack.' +'.$i*15.' minutes'))] -= 1;
             // }
+            $hoursBack = substr($hoursBack, 0, 5);
             $dayKey = array_search($dateBack, array_column($calendar, 'dateBookingCalendar'));
             $hourKey = array_search($hoursBack.'-'.$dateBack, $calendar[$dayKey]);
             $calendar[$dayKey][$hourKey] = 'Réservé';
