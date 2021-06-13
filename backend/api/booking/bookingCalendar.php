@@ -66,7 +66,7 @@ for ($h = 7; $h <= 18; $h++) {
 }
 
 $calendar = array();
-for ($i = 0; $i < 60; $i++) {
+for ($i = 0; $i < 10; $i++) {
     $day = array();
     $day = [
         "idBookingCalendar" => $i+1,
@@ -83,6 +83,7 @@ $bookings = $booking->searchBookingsForCalendar($booking);
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     while ($row = $bookings->fetch()) {
+        echo json_encode($row);
         extract($row);
         if (!is_null($dateForth)) {
             //On donne à $dateForth le format YYYY-MM-DD
