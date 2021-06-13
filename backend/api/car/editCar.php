@@ -21,7 +21,7 @@ $decodedData = json_decode(file_get_contents("php://input"));
 // $car->versionCar = $decodedData->versionCar;
 // $car->colorCar = $decodedData->colorCar;
 
-$uploadDirectory = '';
+$uploadDirectory = '../';
 $extensions = [
     'jpg',
     'jpeg',
@@ -36,9 +36,9 @@ $error = $_FILES['file']['error'];
 if (!empty($file)) {
     $extension = strtolower(pathinfo($file,PATHINFO_EXTENSION));
     if (in_array($extension, $extensions)) {
-//		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().$extension;
+//		$saveName = htmlspecialchars(strip_tags($decodedData->idCustomer)).'-'.htmlspecialchars(strip_tags($decodedData->licensePlateCar)).'-'.uniqid().'.'.$extension;
         $saveName = 'nom_de_sauvegarde'.'-'.uniqid().'.'.$extension;
-		move_uploaded_file($tempName, $uploadDirectory);
+		move_uploaded_file($tempName, $uploadDirectory.$saveName);
 //		$car->urlGrayCard = $saveName;
     } else {
         echo json_encode('Le format de l\'image '. $file .' n\'est pas bon');
