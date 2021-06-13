@@ -49,8 +49,8 @@ if (empty($decodedData->idCustomer)) {
 } else {
     $customer->idCustomer = $decodedData->idCustomer;
     $thisCustomer = $customer->searchCustomerById($customer);
-    $customer->idCustomer = $thisCustomer['idCustomer'];
 }
+$customer->idCustomer = $thisCustomer['idCustomer'];
 echo json_encode($customer);
 
 $car->idCustomer = $customer->idCustomer;
