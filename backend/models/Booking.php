@@ -52,7 +52,8 @@ class Booking {
                 durationForth = :durationForth,
                 distanceBack = :distanceBack,
                 durationBack = :durationBack,
-                priceBooking = :priceBooking
+                priceBooking = :priceBooking,
+                originBooking = :originBooking
                 ";
             $stmt = $this->conn->prepare($query);
 
@@ -73,7 +74,8 @@ class Booking {
                 "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
                 "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
                 "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
-                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking)),
+                "originBooking" => htmlspecialchars(strip_tags($this->originBooking))
             ];
 
             if($stmt->execute($params)) {
@@ -97,7 +99,8 @@ class Booking {
                 idAgency = :idAgency,
                 distanceForth = :distanceForth,
                 durationForth = :durationForth,
-                priceBooking = :priceBooking
+                priceBooking = :priceBooking,
+                originBooking = :originBooking
                 ";
             $stmt = $this->conn->prepare($query);
 
@@ -113,7 +116,8 @@ class Booking {
                 "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
                 "distanceForth" => htmlspecialchars(strip_tags($this->distanceForth)),
                 "durationForth" => htmlspecialchars(strip_tags($this->durationForth)),
-                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking)),
+                "originBooking" => htmlspecialchars(strip_tags($this->originBooking))
             ];
 
             if($stmt->execute($params)) {
@@ -137,7 +141,8 @@ class Booking {
                 idAgency = :idAgency,
                 distanceBack = :distanceBack,
                 durationBack = :durationBack,
-                priceBooking = :priceBooking
+                priceBooking = :priceBooking,
+                originBooking = :originBooking
                 ";
             $stmt = $this->conn->prepare($query);
 
@@ -153,7 +158,8 @@ class Booking {
                 "idAgency" => htmlspecialchars(strip_tags($this->idAgency)),
                 "distanceBack" => htmlspecialchars(strip_tags($this->distanceBack)),
                 "durationBack" => htmlspecialchars(strip_tags($this->durationBack)),
-                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking))
+                "priceBooking" => htmlspecialchars(strip_tags($this->priceBooking)),
+                "originBooking" => htmlspecialchars(strip_tags($this->originBooking))
             ];
 
             if($stmt->execute($params)) {

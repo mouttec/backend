@@ -121,6 +121,7 @@ $booking->statusBooking = 'Confirmée';
 $booking->idCar = $car->idCar;
 $booking->idAgency = $decodedData->idAgency;
 $booking->priceBooking = $decodedData->priceBooking;
+$booking->originBooking = $decodedData->originBooking;
 
 $result = $booking->createBooking($booking);
 
