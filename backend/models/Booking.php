@@ -287,7 +287,7 @@ class Booking {
         $query = "
             SELECT *
             FROM bookings
-            WHERE (dateForth >= :startDate AND dateForth <= :endDate) OR (dateBack >= :startDate AND dateBack <= :endDate) AND statusBooking = 'Confirmée'";
+            WHERE (((dateForth >= :startDate AND dateForth <= :endDate) OR (dateBack >= :startDate AND dateBack <= :endDate)) AND statusBooking = 'Confirmée')";
         $stmt = $this->conn->prepare($query);
 
         $params = [
