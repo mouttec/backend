@@ -45,13 +45,13 @@ if (!empty($file)) {
     }
 }
 
-if(!empty($decodedData->idCar)) {
-    $car->idCar = $decodedData->idCar;
-    $result = $car->updateCar($car);
-} else {
-    $result = $car->createCar($car);
-    $car->addGrayCardToCar($car);
-}
+// if(!empty($decodedData->idCar)) {
+//     $car->idCar = $decodedData->idCar;
+//     $result = $car->updateCar($car);
+// } else {
+//     $result = $car->createCar($car);
+//     $car->addGrayCardToCar($car);
+// }
 
 // if ($result) {
 //     echo json_encode([ "message" => "Le véhicule a été édité !" ]);
