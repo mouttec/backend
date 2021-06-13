@@ -66,7 +66,8 @@ for ($h = 7; $h <= 18; $h++) {
 }
 
 $calendar = array();
-for ($i = 0; $i < 10; $i++) {
+$closureDays = ['Saturday', 'Sunday'];
+for ($i = 0; $i < 60; $i++) {
     $day = array();
     $day = [
         "idBookingCalendar" => $i+1,
@@ -75,7 +76,9 @@ for ($i = 0; $i < 10; $i++) {
     foreach ($shiftsAvailable as $key => $shift) {
         $day['h'.($key+1).'bookingCalendar'] = $shift.'-'.date('Y-m-d', strtotime('+'.$i.' days'));
     }
-    array_push($calendar, $day);
+    if(!in_array(date('l', strtotime('+'.$i.' days')), $closureDays) {
+        array_push($calendar, $day);
+    }
 }
 
 // $booking->idAgency = $decodedData->idAgency;
