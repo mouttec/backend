@@ -80,7 +80,6 @@ for ($i = 0; $i < 10; $i++) {
 
 // $booking->idAgency = $decodedData->idAgency;
 $bookings = $booking->searchBookingsForCalendar();
-echo json_encode($bookings);
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     while ($row = $bookings->fetch()) {
@@ -98,7 +97,6 @@ if ($counter > 0) {
             $dayKey = array_search($dateForth, array_column($calendar, 'dateBookingCalendar'));
             $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
             $calendar[$dayKey][$hourKey] = 'Réservé';
-            echo json_encode(['Ceci est la valeur de $calendar[$dayKey][$hourKey] :' => $calendar[$dayKey][$hourKey]]);
         }
         if (!is_null($dateBack)) {
             $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
@@ -114,7 +112,7 @@ if ($counter > 0) {
 }
 
 if (isset($calendar) && !empty($calendar)) {
-    // echo json_encode($calendar);
+    echo json_encode($calendar);
 } else { 
     http_response_code(404); 
 }
