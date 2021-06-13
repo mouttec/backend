@@ -68,7 +68,6 @@ if (empty($decodedData->idCar)) {
     $car->idCar = $decodedData->idCar;
     $thisCar = $car->searchCarById($car);
 }
-
 $car->idCar = $thisCar['idCar'];
 $car->bindCustomerToCar($car);
 
@@ -77,8 +76,13 @@ if (!empty($decodedData->addressBack)) {
     $address->idCustomer = $customer->idCustomer;
     $address->address = $decodedData->addressBack;
     $address->createAddress($address);
-    $addressBackId = $address->searchAddressId($address);
-    $customer->idBillingAddress = $addressBackId['idAddress'];
+    $addressBack = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressBack['idAddress'];
+    $booking->idAddressBack = $addressBack['idAddress'];
+    $booking->dateBack = $decodedData->dateBack;
+    $booking->hoursBack = $decodedData->hoursBack;
+    $booking->distanceBack = $decodedData->distanceBack;
+    $booking->durationBack = $decodedData->durationBack;
 }
 
 if (!empty($decodedData->addressForth)) {
@@ -86,8 +90,13 @@ if (!empty($decodedData->addressForth)) {
     $address->idCustomer = $customer->idCustomer;
     $address->address = $decodedData->addressForth;
     $address->createAddress($address);
-    $addressForthId = $address->searchAddressId($address);
-    $customer->idBillingAddress = $addressForthId['idAddress'];
+    $addressForth = $address->searchAddressId($address);
+    $customer->idBillingAddress = $addressForth['idAddress'];
+    $booking->idAddressForth = $addressForth['idAddress'];
+    $booking->dateForth = $decodedData->dateForth;
+    $booking->hoursForth = $decodedData->hoursForth;
+    $booking->distanceForth = $decodedData->distanceForth;
+    $booking->durationForth = $decodedData->durationForth;
 }
 
 //On bind l'adresse de facturation
@@ -95,20 +104,10 @@ $customer->bindIdBillingAddress($customer);
 
 $booking->idCustomer = $customer->idCustomer;
 $booking->idPartner = $decodedData->idPartner;
-$booking->hoursBooking = $decodedData->hoursBooking;
-$booking->dateBooking = $decodedData->dateBooking;
 $booking->formulaBooking = $decodedData->formulaBooking;
-$booking->statusBooking = $decodedData->statusBooking;
-$booking->dateReturn = $decodedData->dateReturn;
-$booking->hoursReturn = $decodedData->hoursReturn;
+$booking->statusBooking = 'Confirmée';
 $booking->idCar = $car->idCar;
-$booking->idPickupAddress = $addressForthId;
-$booking->idReturnAddress = $addressBackId;
 $booking->idAgency = $decodedData->idAgency;
-$booking->distanceForth = $decodedData->distanceForth;
-$booking->durationForth = $decodedData->durationForth;
-$booking->distanceBack = $decodedData->distanceBack;
-$booking->durationBack = $decodedData->durationBack;
 $booking->priceBooking = $decodedData->priceBooking;
 
 $result = $booking->createBooking($booking);
