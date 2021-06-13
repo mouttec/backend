@@ -43,44 +43,46 @@ if (isset($_GET['idBooking'])) {
         $bookings_array = array();
         while ($row = $bookings->fetch()) {
             extract($row);
-            if (!is_null($dateForth)) {
-                $datecode = implode('-', array_reverse(explode('/', $dateForth)));
-                $timecode = str_replace(':', '', $hoursForth);
-            } else {
-                $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
-                $timecode = str_replace(':', '', $hoursBack);               
+            if ($statusBooking = 'Confirmé') {
+                if (!is_null($dateForth)) {
+                    $datecode = implode('-', array_reverse(explode('/', $dateForth)));
+                    $timecode = str_replace(':', '', $hoursForth);
+                } else {
+                    $datecode = implode('-', array_reverse(explode('/', $dateBack))); 
+                    $timecode = str_replace(':', '', $hoursBack);               
+                }
+                $booking_item = [
+                         "idBooking" => $idBooking,
+                         "idCustomer" => $idCustomer,
+                         "idPartner" => $idPartner,
+                         "hoursForth" => $hoursForth,
+                         "dateForth" => $dateForth,
+                         "statusBooking" => $statusBooking,
+                         "formulaBooking" => $formulaBooking,
+                         "dateBack" => $dateBack,
+                         "hoursBack" => $hoursBack,
+                         "idCar" => $idCar,
+                         "idAddressForth" => $idAddressForth,
+                         "idAddressBack" => $idAddressBack,
+                         "idAgency" => $idAgency,
+                         "distanceForth" => $distanceForth,
+                         "durationForth" => $durationForth,
+                         "distanceBack" => $distanceBack,
+                         "durationBack" => $durationBack,
+                         "originBooking" => $originBooking,
+                         "dateBooking" => $dateBooking,
+                         "datecode" => $datecode,
+                         "timecode" => $timecode
+                ];
+                $customer->idCustomer = $idCustomer;
+                $thisCustomer = $customer->searchCustomerById($customer);
+                $car->idCar = $idCar;
+                $thisCar = $car->searchCarById($car);
+                $booking_item['customerData'] = $thisCustomer;
+                $booking_item['carData'] = $thisCar;
+                // array_push($booking_item, $thisCustomer, $thisCar);
+                array_push($bookings_array, $booking_item);
             }
-            $booking_item = [
-                     "idBooking" => $idBooking,
-                     "idCustomer" => $idCustomer,
-                     "idPartner" => $idPartner,
-                     "hoursForth" => $hoursForth,
-                     "dateForth" => $dateForth,
-                     "statusBooking" => $statusBooking,
-                     "formulaBooking" => $formulaBooking,
-                     "dateBack" => $dateBack,
-                     "hoursBack" => $hoursBack,
-                     "idCar" => $idCar,
-                     "idAddressForth" => $idAddressForth,
-                     "idAddressBack" => $idAddressBack,
-                     "idAgency" => $idAgency,
-                     "distanceForth" => $distanceForth,
-                     "durationForth" => $durationForth,
-                     "distanceBack" => $distanceBack,
-                     "durationBack" => $durationBack,
-                     "originBooking" => $originBooking,
-                     "dateBooking" => $dateBooking,
-                     "datecode" => $datecode,
-                     "timecode" => $timecode
-            ];
-            $customer->idCustomer = $idCustomer;
-            $thisCustomer = $customer->searchCustomerById($customer);
-            $car->idCar = $idCar;
-            $thisCar = $car->searchCarById($car);
-            $booking_item['customerData'] = $thisCustomer;
-            $booking_item['carData'] = $thisCar;
-            // array_push($booking_item, $thisCustomer, $thisCar);
-            array_push($bookings_array, $booking_item);
         }
         if ($counter > 1) {
             $date  = array_column($bookings_array, 'datecode');

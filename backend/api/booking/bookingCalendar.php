@@ -111,31 +111,32 @@ $bookings = $booking->searchBookingsForCalendar();
 $counter = $bookings->rowCount();
 if ($counter > 0) {
     while ($row = $bookings->fetch()) {
-        echo json_encode($row);
         extract($row);
-        if (!is_null($dateForth)) {
-            //On donne à $dateForth le format YYYY-MM-DD
-            // $dateForth =  implode('-', array_reverse(explode('/', $dateForth)));
-            //$durationDelayInQuarters correspond au nombre de quart d'heure que prend la presta
-            // $durationDelayInQuarters = round(($durationForth+20)/15);
-            // for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
-            //     $calendar[$dateForth][date('H:i', strtotime($hoursForth.' +'.$i*15.' minutes'))] -= 1;
-            // }
-            $hoursForth = substr($hoursForth, 0, 5);
-            $dayKey = array_search($dateForth, array_column($calendar, 'dateBookingCalendar'));
-            $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
-            $calendar[$dayKey][$hourKey] = 'Réservé';
-        }
-        if (!is_null($dateBack)) {
-            // $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
-            // $durationDelayInQuarters = round(($durationBack+20)/15);
-            // for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
-            //     $calendar[$dateBack][date('H:i', strtotime($hoursBack.' +'.$i*15.' minutes'))] -= 1;
-            // }
-            $hoursBack = substr($hoursBack, 0, 5);
-            $dayKey = array_search($dateBack, array_column($calendar, 'dateBookingCalendar'));
-            $hourKey = array_search($hoursBack.'-'.$dateBack, $calendar[$dayKey]);
-            $calendar[$dayKey][$hourKey] = 'Réservé';
+        if ($statusBooking == 'Confirmée') {
+            if (!is_null($dateForth)) {
+                //On donne à $dateForth le format YYYY-MM-DD
+                // $dateForth =  implode('-', array_reverse(explode('/', $dateForth)));
+                //$durationDelayInQuarters correspond au nombre de quart d'heure que prend la presta
+                // $durationDelayInQuarters = round(($durationForth+20)/15);
+                // for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
+                //     $calendar[$dateForth][date('H:i', strtotime($hoursForth.' +'.$i*15.' minutes'))] -= 1;
+                // }
+                $hoursForth = substr($hoursForth, 0, 5);
+                $dayKey = array_search($dateForth, array_column($calendar, 'dateBookingCalendar'));
+                $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
+                $calendar[$dayKey][$hourKey] = 'Réservé';
+            }
+            if (!is_null($dateBack)) {
+                // $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
+                // $durationDelayInQuarters = round(($durationBack+20)/15);
+                // for ($i = 0; $i <= $durationDelayInQuarters; $i++) {
+                //     $calendar[$dateBack][date('H:i', strtotime($hoursBack.' +'.$i*15.' minutes'))] -= 1;
+                // }
+                $hoursBack = substr($hoursBack, 0, 5);
+                $dayKey = array_search($dateBack, array_column($calendar, 'dateBookingCalendar'));
+                $hourKey = array_search($hoursBack.'-'.$dateBack, $calendar[$dayKey]);
+                $calendar[$dayKey][$hourKey] = 'Réservé';
+            }
         }
     }
 }
