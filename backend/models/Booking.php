@@ -284,10 +284,11 @@ class Booking {
             "startDate" => date('Y-m-d'),
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];*/
+        /* OR (dateBack >= :startDate AND dateBack <= :endDate)*/
         $query = "
             SELECT *
             FROM bookings
-            WHERE (dateForth >= :startDate AND dateForth <= :endDate)/* OR (dateBack >= :startDate AND dateBack <= :endDate)*/";
+            WHERE dateForth >= :startDate AND dateForth <= :endDate";
         $stmt = $this->conn->prepare($query);
 
         $params = [
