@@ -43,7 +43,7 @@ if (isset($_GET['idBooking'])) {
         $bookings_array = array();
         while ($row = $bookings->fetch()) {
             extract($row);
-            if ($statusBooking = 'Confirmé') {
+            if ($statusBooking = 'valide') {
                 if (!is_null($dateForth)) {
                     $datecode = implode('-', array_reverse(explode('/', $dateForth)));
                     $timecode = str_replace(':', '', $hoursForth);
