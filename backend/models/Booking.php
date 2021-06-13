@@ -288,7 +288,7 @@ class Booking {
         $query = "
             SELECT *
             FROM bookings
-            WHERE dateForth BETWEEN :startDate AND :endDate OR dateBack BETWEEN :startDate AND :endDate)";
+            WHERE dateForth BETWEEN :startDate AND :endDate OR dateBack BETWEEN :startDate AND :endDate";
         $stmt = $this->conn->prepare($query);
 
         $params = [
@@ -296,7 +296,7 @@ class Booking {
             "endDate" => date('Y-m-d', strtotime('+60 days'))
         ];
 
-        if($stmt->execute(/*$params*/)) {
+        if($stmt->execute($params)) {
             return $stmt;
         }
         return false;
