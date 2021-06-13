@@ -51,7 +51,6 @@ if (empty($decodedData->idCustomer)) {
     $thisCustomer = $customer->searchCustomerById($customer);
 }
 $customer->idCustomer = $thisCustomer['idCustomer'];
-echo json_encode($customer);
 
 $car->idCustomer = $customer->idCustomer;
 if (empty($decodedData->idCar)) {
@@ -92,7 +91,6 @@ if (!empty($decodedData->addressForth)) {
 }
 
 //On bind l'adresse de facturation
-$customer->idCustomer = $customer->idCustomer;
 $customer->bindIdBillingAddress($customer);
 
 $booking->idCustomer = $customer->idCustomer;

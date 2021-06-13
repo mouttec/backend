@@ -185,9 +185,9 @@ class Customer {
             UPDATE "
             . $this->table .
             " SET
-            idBillingAddress = :idBillingAddress,
+            idBillingAddress = :idBillingAddress
             WHERE
-            idCustomer = :idCustomer       
+            idCustomer = :idCustomer
         ";
         $stmt = $this->conn->prepare($query);
 
