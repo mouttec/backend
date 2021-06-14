@@ -125,6 +125,17 @@ if ($counter > 0) {
                 $dayKey = array_search($dateForth, array_column($calendar, 'dateBookingCalendar'));
                 $hourKey = array_search($hoursForth.'-'.$dateForth, $calendar[$dayKey]);
                 $calendar[$dayKey][$hourKey] = 'Réservé';
+                if($typeBooking == 'holidays') {
+                    $currentTimestamp = date('H:i-Y-m-d', strtotime($hoursForth.'-'.$dateForth.'+1 hour'));
+                    $endHolidays = date('d-m-Y', strtotime($dateForth.' +'.$durationForth.' minutes'));
+                    while ($currentTimestamp <= $endHolidays) {
+                        $dayKey = array_search(substr($currentTimestamp, 6), array_column($calendar, 'dateBookingCalendar'));
+                        $hourKey = array_search($currentTimestamp, $calendar[$dayKey]);  
+                        $calendar[$dayKey][$hourKey] = 'Réservé';
+                        //Incrémentation d'une heure
+                        $currentTimestamp = date('H:i-Y-m-d', strtotime($currentTimestamp.' +1 hour'));
+                    }
+               }
             }
             if (!is_null($dateBack)) {
                 // $dateBack =  implode('-', array_reverse(explode('/', $dateBack)));
